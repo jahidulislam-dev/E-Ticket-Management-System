@@ -2,32 +2,139 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+@layer utilities {
+  .bg-custom-gradient {
+    background-image: linear-gradient(71.04deg, #0077b6 -6.92%, #0096c7);
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+.custom-segmented-button {
+  background-color: #ddd !important;
+  border-radius: 0px !important;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+.ant-segmented-item {
+  border-radius: 0px !important;
+}
+
+.ant-segmented-item-selected {
+  background-color: #0096c7 !important;
+  color: white !important;
+  border-radius: 0px !important;
+}
+
+:root {
+  scroll-behavior: smooth;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Ubuntu", "Segoe UI", "Roboto",
+    "Oxygen", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+ul {
+  list-style: none;
+}
+li {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ##################### Common Colors ##################### */
+.primary-text {
+  color: #0077b6;
+}
+.secondary-text {
+  color: #f1f0f2;
+}
+.primary-bg {
+  background: #0077b6;
+}
+.secondary-bg {
+  background: #f1f0f2;
+}
+.secondary-bg-hover:hover {
+  background: #3b83f6;
+  color: #fff;
+  transition: 300ms;
+  --tw-bg-opacity: 0.2;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.auth-bg {
+  background-image: url("../../public/highway.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: rgba(0, 0, 0, 0.6);
+  background-blend-mode: overlay;
+}
+
+/* ##################### Main Container ##################### */
+.main-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.main-button:hover {
+  background-color: #0096c7;
+}
+
+/* .blog-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+} */
+
+.loading-style {
+  margin: 20px 0;
+  margin-bottom: 20px;
+  padding: 30px 50px;
+  text-align: center;
+  /* background: rgba(0, 0, 0, 0.05); */
+  border-radius: 4px;
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-slide {
+  animation: slide 2s linear infinite;
+}
+
+/*##################### custom-rate-feedback css ##################### */
+.custom-rate-feedback .ant-rate-star:not(:last-child) {
+  margin-right: 2px;
+}
+
+@media (max-width: 767px) {
+  .responsive-table-container {
+    overflow-x: auto;
   }
 }
