@@ -183,20 +183,6 @@ export const Menus = [
   //     },
   //   ],
   // },
-  {
-    label: "Upgrade",
-    key: "34262effgs",
-    icon: <GiUpgrade />,
-    permission: ["admin"],
-    children: [
-      {
-        label: "system time",
-        key: "349jgj938hj",
-        path: "/dashboard/system-time",
-        icon: <GiUpgrade />,
-      },
-    ],
-  },
   /* driver menubar */
   {
     label: "profile",

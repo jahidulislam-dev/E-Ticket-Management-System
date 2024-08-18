@@ -2,15 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import Button from "../UI/Button";
-import {
-  removeFromLocalStorage,
-} from "@/utils/localStorage";
+import { removeFromLocalStorage } from "@/utils/localStorage";
 import dynamic from "next/dynamic";
 import jwt from "jsonwebtoken";
 import { useRouter } from "next/router";
 
 const Navbar = () => {
-  const router = useRouter()
+  const router = useRouter();
   const accessToken =
     typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
   const decodedToken = jwt.decode(accessToken);
@@ -19,7 +17,7 @@ const Navbar = () => {
   const toggleDropdown = () => {
     setDropdownOpen((prev) => !prev);
   };
-  // const getUser=getFromLocalStorage('dhruto-travel-credential')
+  // const getUser=getFromLocalStorage('jahid-travel-credential')
 
   const handleSignOut = () => {
     // const path = statePath || "/login";
@@ -30,7 +28,6 @@ const Navbar = () => {
     // toast.success("Successfully Signed Out!");
     // setMyProfile({});
   };
-
 
   return (
     <div
@@ -99,7 +96,7 @@ const Navbar = () => {
                     <Image
                       alt="avatar"
                       className={`w-10 h-10 rounded-full p-[2px] bg-white cursor-pointer`}
-                      src="https://i.ibb.co/nrtwzQd/avatar-boy.webp" /* // TODO: user image set here  */
+                      src="https://i.ibb.co/nrtwzQd/avatar-boy.webp"
                       decoding="async"
                       loading="lazy"
                       width={300}

@@ -37,7 +37,7 @@ const ForgetPasswordForm = () => {
       if (loginData?.data?.accessToken) {
         saveToLocalStorage("accessToken", loginData?.data?.accessToken);
         saveToLocalStorage(
-          "dhruto-travel-credential",
+          "jahid-travel-credential",
           loginData?.data?.userData
         ); // TODO:  save it for testing.
       }

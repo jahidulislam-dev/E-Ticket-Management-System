@@ -8,7 +8,6 @@ const ForgetPassword = () => {
     <>
       <PageTitle title={"forget-password"} />
       <h1 className="text-4xl text-center font-bold mb-6">Forget Password</h1>
-      {/* <SocialLogin></SocialLogin> */}
       <ForgetPasswordForm></ForgetPasswordForm>
     </>
   );
