@@ -7,6 +7,7 @@ import { IDriver } from '../driver/driver.interface'
 import { Driver } from '../driver/driver.model'
 import { generatedDriverCode } from '../driver/driver.utils'
 import { User } from '../user/user.model'
+import { Admin } from '../admin/admin.modal'
 
 const createDriver = async (payload: IDriver): Promise<any> => {
   const driverData = { ...payload }
@@ -66,6 +67,51 @@ const createDriver = async (payload: IDriver): Promise<any> => {
   return { result: newDriverData }
 }
 
+const createAdmin = async (payload: IDriver): Promise<any> => {
+  const adminData = { ...payload }
+  let newAdminAllData = null
+  const session = await mongoose.startSession()
+  try {
+    session.startTransaction()
+    //array
+    const newAdmin = await Admin.create([adminData], { session })
+    if (!newAdmin.length) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create a admin')
+    }
+
+    const user = {
+      name: payload.name,
+      email: payload.email,
+      admin_id: newAdmin[0]._id,
+      role: 'admin',
+      password: config.default_admin_password as string,
+    }
+
+    const newUser = await User.create([user], { session })
+
+    if (!newUser.length) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create user')
+    }
+    newAdminAllData = newUser[0]
+
+    await session.commitTransaction()
+    await session.endSession()
+  } catch (error) {
+    await session.abortTransaction()
+    await session.endSession()
+    throw error
+  }
+
+  if (newAdminAllData) {
+    newAdminAllData = await User.findOne({ _id: newAdminAllData.id })
+      .populate('driver_id')
+      .populate('traveler_id')
+      .populate('admin_id')
+  }
+  return { result: newAdminAllData }
+}
+
 export const AuthService = {
   createDriver,
+  createAdmin
 }
