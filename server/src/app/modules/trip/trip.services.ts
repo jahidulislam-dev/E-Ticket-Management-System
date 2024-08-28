@@ -385,6 +385,62 @@ const getSingleTrip = async (id: string): Promise<ITrip | null> => {
   return result
 }
 
+/**
+ * dept.
+ * from
+ * to
+ *
+ * (must trips status pending)
+ * */
+
+// const getUpComingTrip = async (payload: IUpComingTripPayload) => {
+//   const result = await Booking.find({ travel_id: payload.travel_id })
+
+//   const uniqueBookings = Object.values(
+//     result.reduce((acc, booking) => {
+//       const key = booking.trip_id
+//       if (!acc[key]) {
+//         acc[key] = booking
+//       }
+//       return acc
+//     }, {})
+//   )
+
+//   if (uniqueBookings.length === 0) {
+//     return []
+//   }
+
+//   /*  */
+//   const pendingTrip = []
+//   for (const booksTrip of uniqueBookings as IBooksTrip[]) {
+//     const trip = await Trip.findById(booksTrip.trip_id).populate({
+//       path: 'route_id',
+//       select: 'from to distance',
+//     })
+
+//     if (trip && trip.trips_status === 'pending') {
+//       const seatCount = await Booking.find({
+//         $and: [{ travel_id: payload.travel_id }, { trip_id: trip._id }],
+//       })
+
+//       pendingTrip.push({
+//         from: trip.route_id.from,
+//         to: trip.route_id.to,
+//         distance: trip.route_id.distance,
+//         departure_time: trip.departure_time,
+//         arrival_time: trip.arrival_time,
+//         bus_code: trip.bus_code,
+//         fare: trip.ticket_price,
+//         payment_status: booksTrip.status,
+//         seat: seatCount.length,
+//       })
+//     }
+
+//   }
+
+//   return pendingTrip
+// }
+
 const getUpComingTrip = async (
   payload: any,
   userAuth: JwtPayload | null
@@ -509,10 +565,7 @@ export const UpdateDateAndTimeFromAdminPanel = async ({
   password: string
 }) => {
   if (password !== 'trip_update_admin') {
-    throw new ApiError(
-      httpStatus.NOT_ACCEPTABLE,
-      'Please enter correct credentials'
-    )
+    throw new ApiError(httpStatus.NOT_ACCEPTABLE, 'Please enter correct credentials')
   }
   const allDocuments = await Trip.find()
   if (!allDocuments || allDocuments.length === 0) {
@@ -547,3 +600,41 @@ export const TripService = {
   getBusSeatStatusOnTrip,
   UpdateDateAndTimeFromAdminPanel,
 }
+
+/* 
+const { from, to, departure_time } = req.query;
+
+// Aggregate pipeline
+const pipeline = [
+  {
+    $match: {
+      $and: [
+        { from: from },
+        { to: to },
+      ],
+    },
+  },
+  {
+    $lookup: {
+      from: 'trips', // Assuming your trips collection is named 'trips'
+      localField: '_id',
+      foreignField: 'route_id',
+      as: 'trips',
+    },
+  },
+  {
+    $unwind: '$trips',
+  },
+  {
+    $match: {
+      'trips.departure_time': departure_time,
+    },
+  },
+];
+
+// Execute the aggregation pipeline
+const result = await Route.aggregate(pipeline);
+
+// The result will contain trips that match both route_id and departure_time
+
+*/
