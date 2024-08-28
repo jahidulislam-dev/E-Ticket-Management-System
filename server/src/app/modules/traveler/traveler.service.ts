@@ -9,6 +9,7 @@ import { ITraveler, ITravelerFilter } from './traveler.interface'
 import { Traveler } from './traveler.modal'
 import { travelerSearchableFields } from './traveler.constants'
 import { User } from '../user/user.model'
+import cloudinary from '../../../config/cloudinary'
 import { JwtPayload } from 'jsonwebtoken'
 
 const getAllTraveler = async (
@@ -79,6 +80,7 @@ const updateTraveler = async (
   delete payload._id
   delete payload.email
 
+
   const isExistUser = await User.findById(user?.id)
 
   if (!isExistUser) {
@@ -87,6 +89,13 @@ const updateTraveler = async (
 
   const traveler = await Traveler.findById(isExistUser.traveler_id)
   // console.log(traveler)
+
+  if (payload.image && traveler && traveler.image && traveler.image.avatar_public_url) {
+    await cloudinary.uploader.destroy(traveler.image.avatar_public_url)
+    // console.log(result);
+    // console.log('image here', traveler.image.avatar_public_url)
+  }
+
 
   const result = await Traveler.findByIdAndUpdate(
     isExistUser.traveler_id,
