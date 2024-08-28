@@ -3,13 +3,65 @@ import httpStatus from 'http-status'
 import mongoose from 'mongoose'
 import config from '../../../config'
 import ApiError from '../../../errors/ApiError'
+import { Admin } from '../admin/admin.modal'
 import { IDriver } from '../driver/driver.interface'
 import { Driver } from '../driver/driver.model'
-import { generatedDriverCode } from '../driver/driver.utils'
-import { User } from '../user/user.model'
-import { Admin } from '../admin/admin.modal'
-import { IUser } from '../user/user.interface'
 import { Traveler } from '../traveler/traveler.modal'
+import { IUser } from '../user/user.interface'
+import { User } from '../user/user.model'
+import { generatedDriverCode } from '../driver/driver.utils'
+
+const createTraveler = async (payload: IUser): Promise<any> => {
+  let newUserAllData: IUser | null = null
+
+  const user = new User()
+  const isUserExist = await user.isUserExist(payload.email)
+
+  if (isUserExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'email already exists')
+  }
+  const session = await mongoose.startSession()
+  try {
+    session.startTransaction()
+
+    //array
+    const newTraveler = await Traveler.create([payload], { session })
+    if (!newTraveler.length) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create a traveler')
+    }
+
+    const user = {
+      ...payload,
+      traveler_id: newTraveler[0]._id,
+      role: 'traveler',
+    }
+
+    const newUser = await User.create([user], { session })
+
+    if (!newUser.length) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create user')
+    }
+    newUserAllData = newUser[0]
+
+    await session.commitTransaction()
+    await session.endSession()
+  } catch (error) {
+    await session.abortTransaction()
+    await session.endSession()
+    throw error
+  }
+
+  if (newUserAllData) {
+    newUserAllData = await User.findOne({ _id: newUserAllData._id })
+      .populate('driver_id')
+      .populate('traveler_id')
+      .populate('admin_id')
+  }
+  let accessToken
+  let refreshToken
+
+  return { result: newUserAllData, refreshToken, accessToken }
+}
 
 const createDriver = async (payload: IDriver): Promise<any> => {
   const driverData = { ...payload }
@@ -69,57 +121,6 @@ const createDriver = async (payload: IDriver): Promise<any> => {
   return { result: newDriverData }
 }
 
-const createTraveler = async (payload: IUser): Promise<any> => {
-  let newUserAllData: IUser | null = null
-
-  const user = new User()
-  const isUserExist = await user.isUserExist(payload.email)
-
-  if (isUserExist) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'email already exists')
-  }
-  const session = await mongoose.startSession()
-  try {
-    session.startTransaction()
-
-    //array
-    const newTraveler = await Traveler.create([payload], { session })
-    if (!newTraveler.length) {
-      throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create a traveler')
-    }
-
-    const user = {
-      ...payload,
-      traveler_id: newTraveler[0]._id,
-      role: 'traveler',
-    }
-
-    const newUser = await User.create([user], { session })
-
-    if (!newUser.length) {
-      throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create user')
-    }
-    newUserAllData = newUser[0]
-
-    await session.commitTransaction()
-    await session.endSession()
-  } catch (error) {
-    await session.abortTransaction()
-    await session.endSession()
-    throw error
-  }
-
-  if (newUserAllData) {
-    newUserAllData = await User.findOne({ _id: newUserAllData._id })
-      .populate('driver_id')
-      .populate('traveler_id')
-      .populate('admin_id')
-  }
-  let accessToken
-  let refreshToken
-  return { result: newUserAllData, refreshToken, accessToken }
-}
-
 const createAdmin = async (payload: IDriver): Promise<any> => {
   const adminData = { ...payload }
   let newAdminAllData = null
@@ -165,7 +166,7 @@ const createAdmin = async (payload: IDriver): Promise<any> => {
 }
 
 export const AuthService = {
+  createTraveler,
   createDriver,
   createAdmin,
-  createTraveler,
 }
