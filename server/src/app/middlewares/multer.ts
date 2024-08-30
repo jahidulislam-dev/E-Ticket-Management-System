@@ -1,6 +1,6 @@
 import multer, { FileFilterCallback } from 'multer'
 import path from 'path'
-import { Request } from 'express'
+import { Request } from 'express' // Assuming you are using Express
 
 type CustomFile = Express.Multer.File
 

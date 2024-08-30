@@ -12,6 +12,7 @@ import { busSearchableFields } from './bus.constants'
 import { IBus, IBusFilter } from './bus.interface'
 import { Bus } from './bus.model'
 import { generatedBusCode } from './bus.utils'
+import cloudinary from '../../../config/cloudinary'
 
 const createBus = async (payload: IBus): Promise<any> => {
   const bus_code = await generatedBusCode() // generated bus code
@@ -206,6 +207,16 @@ const updateBusImage = async (
   const isValidImageName = ['bus_image', 'outer_image', 'inner_image'].includes(
     image_name
   )
+  if (
+    payload.image &&
+    isExist &&
+    isValidImageName &&
+    isExist[image_name]?.avatar_public_url
+  ) {
+    await cloudinary.uploader.destroy(
+      isExist[image_name]?.avatar_public_url as string
+    )
+  }
 
   const result = await Bus.findByIdAndUpdate(
     id,

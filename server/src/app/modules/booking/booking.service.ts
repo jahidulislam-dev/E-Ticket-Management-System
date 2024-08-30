@@ -8,6 +8,7 @@ import { Trip } from '../trip/trip.model'
 import { Traveler } from '../traveler/traveler.modal'
 import { User } from '../user/user.model'
 import { generateRandomPassword } from '../../../utils/utilities'
+import { travelerUserInfoSendByEmail } from '../../../config/emailHandle/travellerUserInfoSend'
 
 const getBooking = async () => {
   const result = await Booking.find({})
@@ -58,6 +59,8 @@ const createBooking = async (bookingData: BookingCreateDTO) => {
       if (!newUser) {
         throw new ApiError(httpStatus.BAD_REQUEST, 'Failed to create user')
       }
+      /* travel account centennial email function */
+      travelerUserInfoSendByEmail(user)
 
       getTraveler = await Traveler.findById(newUser.traveler_id)
     }
