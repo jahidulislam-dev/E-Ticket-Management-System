@@ -53,7 +53,7 @@ const UserChart = () => {
         <div className="flex justify-center items-center">
           <Image src={"/images/users.png"} height={100} width={100} />
         </div>
-        <h1 className="text-xl text-center"> Registered Travler</h1>
+        <h1 className="text-xl text-center"> Registered Users</h1>
       </div>
       <MainChart options={options} />
     </div>

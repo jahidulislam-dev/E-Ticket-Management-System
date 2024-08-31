@@ -1,10 +1,13 @@
 import { Table, Modal } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { useDeleteRouteMutation } from "@/redux/route/routeApi";
 import UpdateRouteForm from "./UpdateRouteFrom";
+import Swal from "sweetalert2";
 import Spinner from "@/components/Shared/Spinner";
 
 const RouteListTable = ({ data, isLoading }) => {
+  const [deleteRoute, { data: response, error }] = useDeleteRouteMutation();
   const [isEditing, setIsEditing] = useState(false);
   const [editingRoute, setEditingRoute] = useState(null);
   const columns = [
@@ -69,7 +72,9 @@ const RouteListTable = ({ data, isLoading }) => {
                 style={{ color: "orange", marginLeft: "20px" }}
               />
               <DeleteOutlined
-                onClick={() => {}}
+                onClick={() => {
+                  onDeleteRoute(routeData);
+                }}
                 style={{ color: "red", marginLeft: 12 }}
               />
             </>
@@ -84,7 +89,9 @@ const RouteListTable = ({ data, isLoading }) => {
       title: "Are you sure, you want to delete this route record?",
       okText: "Yes",
       okType: "danger",
-      onOk: () => {},
+      onOk: () => {
+        // deleteRoute(routeData._id); // TODO: delete route left
+      },
     });
   };
 
@@ -96,6 +103,26 @@ const RouteListTable = ({ data, isLoading }) => {
     setIsEditing(false);
     setEditingRoute(null);
   };
+
+  useEffect(() => {
+    if (response?.statusCode === 200) {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${response?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else if (error?.status === 400 || error?.status === 406) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${error?.data?.errorMessage[0]?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  }, [response, error]);
 
   return (
     <div className="App">

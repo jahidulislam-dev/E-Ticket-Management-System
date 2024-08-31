@@ -1,11 +1,42 @@
-import { Form, Button, Input, Select } from "antd";
+import { Form, Button, Input, InputNumber, Select } from "antd";
+import Swal from "sweetalert2";
+import { useEffect } from "react";
+import { useUpdateBusMutation } from "@/redux/bus/busApi";
 
 const UpdateBusForm = ({ editingBus, resetEditing }) => {
+  const [
+    updateBus,
+    { data: updateResponse, error: updateError, isLoading: updateIsLoading },
+  ] = useUpdateBusMutation();
+
   const onFinish = async (values) => {
     console.log("bus update info", values);
+    await updateBus({ bus_id: editingBus._id, body: values });
   };
 
   const [form] = Form.useForm();
+  form.setFieldsValue(editingBus);
+  useEffect(() => {
+    if (updateResponse?.statusCode === 200) {
+      resetEditing();
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${updateResponse?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else if (updateError?.status === 400) {
+      resetEditing();
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${updateError?.data?.errorMessage[0]?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  }, [updateResponse, updateError]);
 
   return (
     <div
@@ -70,8 +101,13 @@ const UpdateBusForm = ({ editingBus, resetEditing }) => {
         </Form.Item>
 
         <Form.Item wrapperCol={{ span: 24 }}>
-          <Button disabled={false} block type="primary" htmlType="submit">
-            {"Update"}
+          <Button
+            disabled={updateIsLoading ? true : false}
+            block
+            type="primary"
+            htmlType="submit"
+          >
+            {updateIsLoading ? "Loading..." : "Update"}
           </Button>
           <Button className="mt-2" block type="default" onClick={resetEditing}>
             Cancel

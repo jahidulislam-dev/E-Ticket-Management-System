@@ -1,8 +1,14 @@
 import { Form, Button, Select, InputNumber, DatePicker } from "antd";
+import { useEffect, useState } from "react";
 import dayjs from "dayjs";
+import { useGetAllRouteQuery } from "@/redux/route/routeApi";
 import { AiOutlineArrowRight } from "react-icons/ai";
+import { useGetAllAvailabilityBusQuery } from "@/redux/bus/busApi";
 import { BsBusFront } from "react-icons/bs";
+import { useGetAllAvailabilityDriverQuery } from "@/redux/driver/driverApi";
 import { BiTrip, BiUser } from "react-icons/bi";
+import { useUpdateTripMutation } from "@/redux/trip/tripApi";
+import Swal from "sweetalert2";
 
 const initialData = {
   route_code: "",
@@ -31,9 +37,87 @@ const UpdateTripForm = ({ editingTrip, resetEditing }) => {
     "YYYY-MM-DDTHH:mm:ss.sss"
   );
 
+  const { data: routeData, isLoading: routeIsLoading } = useGetAllRouteQuery();
+  const { data: driveData, isLoading: driverIsLoading } =
+    useGetAllAvailabilityDriverQuery("ready");
+  const { data: busData, isLoading: busIsLoading } =
+    useGetAllAvailabilityBusQuery("standBy");
+
+  // trip update api....
+
+  const [
+    updateTrip,
+    { data: updateResponse, error: updateError, isLoading: updateIsLoading },
+  ] = useUpdateTripMutation();
+
   const handleChange = async (changedValues) => {
-    console.log("Changed values:", changedValues);
+    // console.log("Changed values:", changedValues);
+    if (changedValues?.departure_time) {
+      const departureDateTime = dayjs(changedValues?.departure_time).format(
+        "YYYY-MM-DDTHH:mm:ss.sss"
+      );
+      await updateTrip({
+        trip_id: editingTrip?._id,
+        body: {
+          ...changedValues,
+          departure_time: departureDateTime,
+        },
+      });
+    } else if (changedValues?.arrival_time) {
+      const arrivalDateTime = dayjs(changedValues?.arrival_time).format(
+        "YYYY-MM-DDTHH:mm:ss.sss"
+      );
+      await updateTrip({
+        trip_id: editingTrip?._id,
+        body: {
+          ...changedValues,
+          arrival_time: arrivalDateTime,
+        },
+      });
+    } else if (changedValues?.ticket_price) {
+      await updateTrip({
+        trip_id: editingTrip?._id,
+        body: {
+          ...changedValues,
+          ticket_price: parseInt(changedValues?.ticket_price),
+        },
+      });
+    } else {
+      console.log(changedValues);
+      await updateTrip({
+        trip_id: editingTrip?._id,
+        body: {
+          ...changedValues,
+        },
+      });
+    }
   };
+
+  useEffect(() => {
+    if (updateResponse?.statusCode === 200) {
+      form.setFieldsValue(initialData);
+      resetEditing();
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${updateResponse?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else if (
+      updateError?.status === 400 ||
+      updateError?.status === 406 ||
+      updateError?.status === 403
+    ) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${updateError?.data?.errorMessage[0]?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  }, [updateResponse, updateError]);
 
   const [form] = Form.useForm();
   form.setFieldsValue(editingTrip);
@@ -48,11 +132,11 @@ const UpdateTripForm = ({ editingTrip, resetEditing }) => {
         form={form}
         autoComplete="off"
         layout="vertical"
-        onValuesChange={handleChange}
+        onValuesChange={handleChange} // Handle form field changes here
       >
         <Form.Item name="route_code" label="Route code" requiredMark="require">
           <Select placeholder="Select trip route code">
-            {[].map((rt, index) => (
+            {routeData?.data?.map((rt, index) => (
               <Select.Option key={rt._id} value={`${rt?.route_code}`}>
                 <span className="flex items-center">
                   <span className="ps-2 pe-2">
@@ -105,7 +189,7 @@ const UpdateTripForm = ({ editingTrip, resetEditing }) => {
 
         <Form.Item name="bus_code" label="Bus code" requiredMark="require">
           <Select placeholder="Select trip bus code">
-            {[].map((bs) => (
+            {busData?.data?.map((bs) => (
               <Select.Option key={bs._id} value={`${bs?.bus_code}`}>
                 <span className="flex items-center">
                   <span className="ps-2 pe-2">
@@ -122,7 +206,7 @@ const UpdateTripForm = ({ editingTrip, resetEditing }) => {
 
         <Form.Item name="driver_id" label="Driver" requiredMark="require">
           <Select placeholder="Select trip Driver">
-            {[].map((bs) => (
+            {driveData?.data?.map((bs) => (
               <Select.Option key={bs._id} value={`${bs?._id}`}>
                 <span className="flex items-center">
                   <span className="ps-2 pe-2">

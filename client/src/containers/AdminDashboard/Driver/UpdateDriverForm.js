@@ -1,11 +1,40 @@
 import { Form, Button, Input, InputNumber, Select } from "antd";
+import Swal from "sweetalert2";
+import { useEffect } from "react";
+import { useUpdateDriverMutation } from "@/redux/driver/driverApi";
 
 const UpdateDriverForm = ({ editingDriver, resetEditing }) => {
+  const [
+    updateDriver,
+    { data: updateResponse, error: updateError, isLoading: updateIsLoading },
+  ] = useUpdateDriverMutation();
   const onFinish = async (values) => {
-    console.log(values);
+    await updateDriver({ driver_id: editingDriver?._id, body: values });
   };
 
   const [form] = Form.useForm();
+  form.setFieldsValue(editingDriver);
+  useEffect(() => {
+    if (updateResponse?.statusCode === 200) {
+      resetEditing();
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${updateResponse?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else if (updateError?.status === 400) {
+      resetEditing();
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${updateError?.data?.errorMessage[0]?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  }, [updateResponse, updateError]);
 
   return (
     <div
@@ -166,8 +195,13 @@ const UpdateDriverForm = ({ editingDriver, resetEditing }) => {
         </Form.Item>
 
         <Form.Item wrapperCol={{ span: 24 }}>
-          <Button disabled={false} block type="primary" htmlType="submit">
-            {"Submit"}
+          <Button
+            disabled={updateIsLoading ? true : false}
+            block
+            type="primary"
+            htmlType="submit"
+          >
+            {updateIsLoading ? "Loading..." : "Submit"}
           </Button>
           <Button className="mt-2" block type="default" onClick={resetEditing}>
             Cancel
@@ -177,5 +211,7 @@ const UpdateDriverForm = ({ editingDriver, resetEditing }) => {
     </div>
   );
 };
+
+// TODO: [ankan bhai] need a nice loading for user better interaction
 
 export default UpdateDriverForm;

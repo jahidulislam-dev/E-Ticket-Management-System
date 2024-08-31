@@ -1,8 +1,16 @@
 "use client";
+import Spinner from "@/components/Shared/Spinner";
+import { useGetAllTripQuery } from "@/redux/trip/tripApi";
 import { Table, Typography } from "antd";
 import dayjs from "dayjs";
 
 const CompleteTripTable = () => {
+  const { data, isLoading } = useGetAllTripQuery({
+    limit: 10,
+    page: 1,
+    trips_status: "completed",
+  });
+
   const columns = [
     {
       title: "Sr.",
@@ -114,12 +122,13 @@ const CompleteTripTable = () => {
       <Typography.Title level={4}>Trip History</Typography.Title>
       <Table
         columns={columns}
-        dataSource={[]}
+        dataSource={data?.data}
         pagination={{
           pageSize: 5,
         }}
         scroll={{ x: true }}
-      />
+        loading={isLoading && { indicator: <Spinner /> }}
+      ></Table>
     </span>
   );
 };

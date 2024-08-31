@@ -1,6 +1,9 @@
 import { Form, Select, Input, Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
+import { useEffect } from "react";
+import { useAddBusMutation } from "@/redux/bus/busApi";
 import MainButton from "@/components/UI/Button";
+import Swal from "sweetalert2";
 
 const initialData = {
   model: "",
@@ -13,6 +16,8 @@ const initialData = {
 
 const CreateBusForm = () => {
   const [form] = Form.useForm();
+  const [AddBus, { data: busCreateResponse, error, isLoading }] =
+    useAddBusMutation();
 
   const onFinish = async (values) => {
     // console.log(values);
@@ -29,7 +34,33 @@ const CreateBusForm = () => {
     formData.append("brand_name", values.brand_name);
     formData.append("model", values.model);
     formData.append("total_seats", values.total_seats);
+    await AddBus(formData);
   };
+
+  useEffect(() => {
+    if (busCreateResponse?.statusCode === 200) {
+      form.setFieldsValue(initialData);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${busCreateResponse?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else if (
+      error?.status === 400 ||
+      error?.status === 406 ||
+      error?.status === 403
+    ) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${error?.data?.errorMessage[0]?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  }, [busCreateResponse, error]);
 
   const uploadButton = (
     <div>
@@ -237,7 +268,11 @@ const CreateBusForm = () => {
         </Form.Item>
 
         <Form.Item wrapperCol={{ span: 24 }}>
-          <MainButton btnName="Submit" styles="w-full py-3" />
+          <MainButton
+            btnName="Submit"
+            isLoading={isLoading}
+            styles="w-full py-3"
+          ></MainButton>
         </Form.Item>
       </Form>
     </div>

@@ -10,7 +10,7 @@ const Footer = () => {
         padding: "10px 50px",
       }}
     >
-      Jahid Travel©{year}
+      Jahid Travel©{year} Created by dev of thought group
     </Footer>
   );
 };

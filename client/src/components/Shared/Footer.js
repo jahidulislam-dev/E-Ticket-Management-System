@@ -89,7 +89,8 @@ const Footer = () => {
                   <li>
                     <Link
                       className="text-gray-700 font-semibold block pb-2 text-sm"
-                      href="/"
+                      href="https://github.com/creativetimofficial/notus-js/blob/main/LICENSE.md?ref=njs-profile"
+                      target="_blank"
                     >
                       Our License
                     </Link>
@@ -97,7 +98,8 @@ const Footer = () => {
                   <li>
                     <Link
                       className="text-gray-700 font-semibold block pb-2 text-sm"
-                      href="/"
+                      href="https://creative-tim.com/terms?ref=njs-profile"
+                      target="_blank"
                     >
                       Terms &amp; Conditions
                     </Link>
@@ -105,7 +107,8 @@ const Footer = () => {
                   <li>
                     <Link
                       className="text-gray-700 font-semibold block pb-2 text-sm"
-                      href="/"
+                      href="https://creative-tim.com/privacy?ref=njs-profile"
+                      target="_blank"
                     >
                       Privacy Policy
                     </Link>
@@ -130,6 +133,34 @@ const Footer = () => {
                   <span className="text-gray-700 font-semibold block pb-2 text-sm">
                     Get our offers and discount via email.
                   </span>
+                  <Form form={form} onFinish={handleSubscribe}>
+                    <Form.Item
+                      name="email"
+                      className="mb-0"
+                      rules={[
+                        { required: true, message: "Please enter your email!" },
+                      ]}
+                    >
+                      <Input
+                        size="large"
+                        allowClear
+                        className="hover:border-red-500 border-2 focus:border-red-500 focus-within:border-red-500 rounded"
+                        placeholder="Enter Your Email"
+                        prefix={<MailOutlined />}
+                      />
+                    </Form.Item>
+
+                    <Form.Item>
+                      <Button
+                        size="large"
+                        type="primary"
+                        htmlType="submit"
+                        className="w-full mt-3 rounded bg-[#d84e55] hover:bg-red-400 duration-200 font-semibold"
+                      >
+                        Subscribe
+                      </Button>
+                    </Form.Item>
+                  </Form>
                 </div>
               </div>
             </div>
@@ -161,6 +192,12 @@ const Footer = () => {
                 type="button"
               >
                 <IoLogoYoutube className="w-full h-full p-2" />
+              </button>
+              <button
+                className="cursor-pointer border-none bg-white text-black hover:text-[#0077b5] duration-300 text-blueGray-800 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-md outline-none focus:outline-none mr-2"
+                type="button"
+              >
+                <FaLinkedin className="w-full h-full p-[6px]" />
               </button>
             </div>
           </div>

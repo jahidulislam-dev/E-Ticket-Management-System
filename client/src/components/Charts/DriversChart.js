@@ -43,8 +43,8 @@ const DriversChart = () => {
         },
       },
     ],
-    series: [26],
-    labels: ["Drivers"],
+    series: [26, 22],
+    labels: ["Drivers", "Conductor"],
   };
 
   return (

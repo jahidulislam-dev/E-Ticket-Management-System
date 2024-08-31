@@ -100,6 +100,7 @@ const BusListTable = ({ data, isLoading }) => {
         return <p>{availability_status?.length}</p>;
       },
     },
+    /* // TODO: trip history show in a table */
     // {
     //   title: "Current status",
     //   dataIndex: "availability_status",

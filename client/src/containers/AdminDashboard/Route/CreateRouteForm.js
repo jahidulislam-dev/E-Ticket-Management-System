@@ -1,4 +1,7 @@
 import { Form, Input, InputNumber } from "antd";
+import { useEffect } from "react";
+import { useAddRouteMutation } from "@/redux/route/routeApi";
+import Swal from "sweetalert2";
 import MainButton from "@/components/UI/Button";
 
 const initialData = {
@@ -7,13 +10,40 @@ const initialData = {
   distance: 0,
 };
 
+
 const CreateRouteForm = () => {
   const [form] = Form.useForm();
   // form.setFieldsValue(initialData);
 
+  const [
+    AddRoute,
+    { data: addResponse, error: addError, isLoading: addIsLoading },
+  ] = useAddRouteMutation();
   const onFinish = async (values) => {
-    console.log(values);
+    await AddRoute(values);
   };
+
+  useEffect(() => {
+      if (addResponse?.statusCode === 200) {
+      form.setFieldsValue(initialData);
+      console.log('i am here')
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${addResponse?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }  else if (addError?.status === 400 || addError?.status === 406) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${addError?.data?.errorMessage[0]?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  }, [addResponse, addError]);
 
   return (
     <div
@@ -94,11 +124,21 @@ const CreateRouteForm = () => {
         </Form.Item>
 
         <Form.Item className="mb-2" wrapperCol={{ span: 24 }}>
-          <MainButton btnName="Submit" styles="w-full py-3" />
+          {/* <Button
+            disabled={addIsLoading ? true : false}
+            block
+            type="primary"
+            htmlType="submit"
+          >
+            {addIsLoading ? "Loading..." : "Submit"}
+          </Button> */}
+          <MainButton btnName="Submit" styles="w-full py-3"></MainButton>
         </Form.Item>
       </Form>
     </div>
   );
 };
+
+// TODO: [handler submit button with loading]
 
 export default CreateRouteForm;

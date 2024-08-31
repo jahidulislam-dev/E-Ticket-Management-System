@@ -1,13 +1,16 @@
 import { Table, Modal, Avatar } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import UpdateDriverForm from "./UpdateDriverForm";
+import { useDeleteDriverMutation } from "@/redux/driver/driverApi";
+import Swal from "sweetalert2";
 import Spinner from "@/components/Shared/Spinner";
 
 const DriverList = ({ data, loading }) => {
+  const [deleteDriver, { data: response, error, isLoading }] =
+    useDeleteDriverMutation();
   const [isEditing, setIsEditing] = useState(false);
   const [editingDriver, setEditingDriver] = useState(null);
-
   const columns = [
     {
       title: "Sr.",
@@ -103,7 +106,9 @@ const DriverList = ({ data, loading }) => {
       title: "Are you sure, you want to delete this driver record?",
       okText: "Yes",
       okType: "danger",
-      onOk: () => {},
+      onOk: () => {
+        deleteDriver(travelerData._id);
+      },
     });
   };
 
@@ -116,6 +121,27 @@ const DriverList = ({ data, loading }) => {
     setIsEditing(false);
     setEditingDriver(null);
   };
+
+  useEffect(() => {
+    if (response?.statusCode === 200) {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${response?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+    if (error?.status === 400) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${error?.data?.errorMessage[0]?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  }, [response, error]);
 
   return (
     <div className="App">

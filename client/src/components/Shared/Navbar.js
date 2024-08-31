@@ -12,12 +12,13 @@ const Navbar = () => {
   const accessToken =
     typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
   const decodedToken = jwt.decode(accessToken);
+  // console.log(decodedToken);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownOpen((prev) => !prev);
   };
-  // const getUser=getFromLocalStorage('jahid-travel-credential')
+  // const getUser=getFromLocalStorage('Jahid-travel-credential')
 
   const handleSignOut = () => {
     // const path = statePath || "/login";
@@ -96,7 +97,7 @@ const Navbar = () => {
                     <Image
                       alt="avatar"
                       className={`w-10 h-10 rounded-full p-[2px] bg-white cursor-pointer`}
-                      src="https://i.ibb.co/nrtwzQd/avatar-boy.webp"
+                      src="https://i.ibb.co/nrtwzQd/avatar-boy.webp" /* // TODO: user image set here  */
                       decoding="async"
                       loading="lazy"
                       width={300}

@@ -1,30 +1,29 @@
-import { Form, Button, Input, InputNumber } from "antd";
-import {
-  useGetSingleRouteDetailsQuery,
-  useUpdateRouteMutation,
-} from "@/redux/route/routeApi";
+import { Form, Button, Input, InputNumber, Select } from "antd";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
+import {
+  useGetSingleIncidentDetailsQuery,
+  useUpdateIncidentMutation,
+} from "@/redux/incident/incidentApi";
 
-const UpdateRouteForm = ({ editingRoute, resetEditing }) => {
+const UpdateIncidentForm = ({ editingIncident, resetEditing }) => {
   const {
     data,
     error: currRouteError,
     isLoading: currRouteIsLoading,
-  } = useGetSingleRouteDetailsQuery(editingRoute?._id);
+  } = useGetSingleIncidentDetailsQuery(editingIncident?._id);
   const [
-    updateRoute,
+    updateIncident,
     { data: updateResponse, error: updateError, isLoading: updateIsLoading },
-  ] = useUpdateRouteMutation();
+  ] = useUpdateIncidentMutation();
   const onFinish = async (values) => {
-    await updateRoute({ route_id: data?.data?._id, body: values });
+    await updateIncident({ route_id: data?.data?._id, body: values });
   };
 
   const [form] = Form.useForm();
   form.setFieldsValue(data?.data);
-
   useEffect(() => {
-    if (updateResponse?.statusCode === 200) {
+    if (updateResponse?.success) {
       resetEditing();
       Swal.fire({
         position: "center",
@@ -33,7 +32,7 @@ const UpdateRouteForm = ({ editingRoute, resetEditing }) => {
         showConfirmButton: false,
         timer: 1500,
       });
-    } else if (updateError?.status === 400 || updateError?.status === 406) {
+    } else {
       resetEditing();
       Swal.fire({
         position: "center",
@@ -61,63 +60,77 @@ const UpdateRouteForm = ({ editingRoute, resetEditing }) => {
         }}
       >
         <Form.Item
-          name="from"
-          label="From"
+          name="bus_code"
+          label="Bus Code"
           rules={[
             {
               required: true,
-              message: "Please enter From of the route",
+              message: "Please enter Bus code",
             },
             { whitespace: true },
           ]}
           hasFeedback
         >
-          <Input placeholder="Type From" />
+          <Input placeholder="Type Bus code" />
         </Form.Item>
 
         <Form.Item
-          name="to"
-          label="To"
+          name="servicing_status"
+          label="Servicing status"
+          requiredMark="require"
           rules={[
             {
               required: true,
-              message: "Please enter To of the route",
+              message: "bus servicing status is required",
+            },
+          ]}
+        >
+          <Select placeholder="Select servicing status">
+            <Select.Option value="pending">pending</Select.Option>
+            <Select.Option value="done">done</Select.Option>
+            <Select.Option value="on-servicing">on-servicing</Select.Option>
+          </Select>
+        </Form.Item>
+
+        <Form.Item
+          name="description"
+          label="Description"
+          rules={[
+            {
+              required: false,
+              message: "description is required",
             },
             { whitespace: true },
           ]}
-          hasFeedback
         >
-          <Input placeholder="Type To" />
+          <Input.TextArea
+            style={{ height: 120, resize: "none" }}
+            placeholder="Type description"
+          />
         </Form.Item>
-        
-        <label className="font-small">
-          <span className="primary-text">*</span> Distance
-        </label>
+
         <Form.Item
-          name="distance"
-          className="mt-2 mb-6"
+          name="cost"
+          label="Cost"
           rules={[
             {
               required: true,
             },
             {
               type: "number",
-              message: "Please enter route distance",
-              min: 20,
-              max: 1600,
+              message: "Please enter cost of servicing",
+              min: 0,
+              max: 10000,
             },
           ]}
-          hasFeedback
         >
           <InputNumber
-            className="h-10 w-full flex items-center"
             formatter={(values) =>
-              `${values}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              `৳ ${values}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             }
-            placeholder="Type distance"
+            placeholder="Type cost"
           />
         </Form.Item>
-
         <Form.Item wrapperCol={{ span: 24 }}>
           <Button
             disabled={updateIsLoading ? true : false}
@@ -127,15 +140,10 @@ const UpdateRouteForm = ({ editingRoute, resetEditing }) => {
           >
             {updateIsLoading ? "Loading..." : "Submit"}
           </Button>
-          <Button className="mt-2" block type="default" onClick={resetEditing}>
-            Cancel
-          </Button>
         </Form.Item>
       </Form>
     </div>
   );
 };
 
-// TODO:[anakan bhai] handle loading button please.
-
-export default UpdateRouteForm;
+export default UpdateIncidentForm;

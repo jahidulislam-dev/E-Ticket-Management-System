@@ -3,6 +3,8 @@ import Image from "next/image";
 import { PlusOutlined } from "@ant-design/icons";
 import { Form, Upload } from "antd";
 import MainButton from "@/components/UI/Button";
+import Swal from "sweetalert2";
+import { useUpdateBusImageMutation } from "@/redux/bus/busApi";
 
 const initialData = {
   image: undefined,
@@ -13,9 +15,46 @@ const UpdateImage = ({ ImageUpdate, resetImageSelect }) => {
   const [form] = Form.useForm();
   form.setFieldsValue(initialData);
 
+  const [updateImage, { data: updateImageResponse, error, isLoading }] =
+    useUpdateBusImageMutation();
+
   const onFinish = async (values) => {
-    console.log(values);
+    // console.log(values);
+    let formData = new FormData();
+    values.image
+      ? formData.append("image", values?.image[0]?.originFileObj)
+      : formData.append("bus_image", "");
+    formData.append("image_name", ImageUpdate.image_name);
+
+    // console.log(formData);
+    await updateImage({ bus_id: ImageUpdate.Bus_id, body: formData });
   };
+
+  useEffect(() => {
+    if (updateImageResponse?.statusCode === 200) {
+      form.setFieldsValue(initialData);
+      resetImageSelect()
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${updateImageResponse?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else if (
+      error?.status === 400 ||
+      error?.status === 406 ||
+      error?.status === 403
+    ) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${error?.data?.errorMessage[0]?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  }, [updateImageResponse, error]);
 
   const uploadButton = (
     <div>

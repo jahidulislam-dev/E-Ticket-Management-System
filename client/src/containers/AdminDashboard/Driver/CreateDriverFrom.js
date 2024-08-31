@@ -1,7 +1,10 @@
+import { useAddDriverMutation } from "@/redux/driver/driverApi";
 import { Form, Select, InputNumber, Input, Button } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import { LoadingOutlined } from "@ant-design/icons";
 import { validateEmail } from "@/utils/helper";
+// import MainButton from "@/components/UI/Button";
 
 const initialData = {
   Name: "",
@@ -16,11 +19,16 @@ const initialData = {
 
 const CreateDriverForm = () => {
   const [driverInfo, setDriverInfo] = useState(initialData);
+  const [
+    AddDriver,
+    { data: addResponse, error: addError, isLoading: addIsLoading },
+  ] = useAddDriverMutation();
 
   const onFinish = async (values) => {
     setDriverInfo(values);
     const phoneNumber = values.prefix + values.phone;
     const createData = { ...values, phone: phoneNumber };
+    await AddDriver(createData);
   };
 
   console.log(driverInfo);
@@ -28,9 +36,33 @@ const CreateDriverForm = () => {
   const [form] = Form.useForm();
   form.setFieldsValue(driverInfo);
 
+  useEffect(() => {
+    console.log(addError);
+    if (addResponse?.statusCode === 200) {
+      setDriverInfo(initialData);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${addResponse?.message}`,
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    } else if (addError?.status === 400) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${addError?.data?.errorMessage[0]?.message}`,
+        showConfirmButton: false,
+        timer: 2500,
+      });
+    }
+  }, [addResponse, addError]);
+
   const prefixSelector = (
     <Form.Item name="prefix" initialValue="+880" noStyle>
-      <Select style={{ width: 80 }}></Select>
+      <Select style={{ width: 80 }}>
+        <Option value="+880">+880</Option>
+      </Select>
     </Form.Item>
   );
 
@@ -153,7 +185,13 @@ const CreateDriverForm = () => {
           ]}
           hasFeedback
         >
-          <InputNumber className="w-full" placeholder="Type years" />
+          <InputNumber
+            className="w-full"
+            // formatter={(values) =>
+            //   `${values}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            // }
+            placeholder="Type years"
+          />
         </Form.Item>
 
         <Form.Item
@@ -193,15 +231,17 @@ const CreateDriverForm = () => {
 
         <Form.Item wrapperCol={{ span: 24 }}>
           <Button
-            disabled={false}
+            disabled={addIsLoading ? true : false}
             block
-            icon={<LoadingOutlined />}
+            icon={addIsLoading ? <LoadingOutlined /> : null}
             type="primary"
             className="w-full bg-[#d84e55] rounded"
+            loading={addIsLoading}
             htmlType="submit"
           >
-            {"Submit"}
+            {addIsLoading ? "Loading..." : "Submit"}
           </Button>
+          {/* <MainButton btnName="Submit" styles="w-full py-3"></MainButton> */}
         </Form.Item>
       </Form>
     </div>
