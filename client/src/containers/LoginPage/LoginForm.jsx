@@ -23,8 +23,7 @@ const LoginForm = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const router = useRouter();
   const onFinish = (values) => {
-    router.push("/dashboard");
-    // login(values); //TODO: api calling
+    login(values);
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -38,7 +37,7 @@ const LoginForm = () => {
       if (loginData?.data?.accessToken) {
         saveToLocalStorage("accessToken", loginData?.data?.accessToken);
         saveToLocalStorage(
-          "jahid-travel-credential",
+          "dhruto-travel-credential",
           loginData?.data?.userData
         ); // TODO:  save it for testing.
       }
@@ -96,6 +95,10 @@ const LoginForm = () => {
               type: "email",
               message: "Your email address",
             },
+            {
+              required: true,
+              message: "The input is not valid E-mail!",
+            },
           ]}
         >
           <Input className="h-8 mt-1" />
@@ -105,7 +108,12 @@ const LoginForm = () => {
           <label className="font-medium">Password</label>
           <Form.Item
             name="password"
-            rules={[]}
+            rules={[
+              {
+                required: true,
+                message: "Please input your password!",
+              },
+            ]}
           >
             <Input.Password className="h-8 mt-1" />
           </Form.Item>
@@ -113,11 +121,11 @@ const LoginForm = () => {
         {/* <p className="text-right text-sm text-black cursor-pointer -mt-5 w-full mb-5 hover:underline">
           Forget your password
         </p> */}
-        {/* <div className="w-full  text-right -mt-4 mb-3">
+        <div className="w-full  text-right -mt-4 mb-3">
           <Link href="/forget-password" className="hover:underline text-black">
             Forget your password
           </Link>
-        </div> */}
+        </div>
 
         <Form.Item>
           <Button

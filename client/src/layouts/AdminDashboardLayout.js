@@ -34,7 +34,7 @@ const AdminDashboardLayout = ({ children }) => {
         {collapsed || (
           <div className="flex justify-center items-center h-10 rounded-xl mx-2 my-3 duration-700">
             <Link href={"/"} className="text-white text-2xl">
-              Jahid Travel
+              Dhruto Travel
             </Link>
           </div>
         )}
@@ -68,7 +68,7 @@ const AdminDashboardLayout = ({ children }) => {
             padding: "24px 10px",
             minHeight: "calc(100vh - 185px)",
             background: colorBgContainer,
-            overflowY: "scroll",
+            overflowY: "scroll" 
           }}
           className="overflow-x-scroll md:overflow-x-hidden"
         >
@@ -79,8 +79,5 @@ const AdminDashboardLayout = ({ children }) => {
     </Layout>
   );
 };
-export default AdminDashboardLayout;
-// export default dynamic(
-//   () => Promise.resolve(withAuth(AdminDashboardLayout, ["admin"])),
-//   { ssr: true }
-// );
+// export default AdminDashboardLayout;
+export default dynamic(() => Promise.resolve(withAuth(AdminDashboardLayout, ["admin"])), { ssr: true });
