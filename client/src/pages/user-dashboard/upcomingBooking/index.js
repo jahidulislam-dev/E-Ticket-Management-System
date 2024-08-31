@@ -1,12 +1,14 @@
 import UpcomingBookingTable from "@/containers/UserDashboard/IncompleteTourAndBooking";
+import { upcomingBookingData } from "@/data/userDashboard/userDashboardData";
 import RootLayout from "@/layouts/RootLayout";
 import UserDashboardLayout from "@/layouts/UserDashboardLayout";
 import React from "react";
 
 const UpcomingBooking = () => {
+  
   return (
     <div>
-      <UpcomingBookingTable />
+      <UpcomingBookingTable data={upcomingBookingData} />
     </div>
   );
 };

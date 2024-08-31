@@ -32,18 +32,16 @@ const UserDashboardLayout = () => {
                 size="large"
                 block
                 options={segmentOptions}
-                className="custom-segmented-button" // Add this line to apply the custom class
+                className="custom-segmented-button"
                 onChange={(value) => setSelectedOption(value)}
                 style={{ marginBottom: "10px" }}
               />
-              {/* <div className="overflow-x-auto"> */}
-                {selectedOption === "My tour history" && <MyTourHistoryTable />}
-                {selectedOption === "Incomplete tour & booking" && (
-                  <IncompleteTourAndBooking />
-                )}
-                {selectedOption === "Reviews" && <ReviewTable />}
-              </div>
-            // </div>
+              {selectedOption === "My tour history" && <MyTourHistoryTable />}
+              {selectedOption === "Incomplete tour & booking" && (
+                <IncompleteTourAndBooking />
+              )}
+              {selectedOption === "Reviews" && <ReviewTable />}
+            </div>
           )}
         </div>
       </div>

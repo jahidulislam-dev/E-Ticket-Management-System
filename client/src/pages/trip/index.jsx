@@ -1,16 +1,24 @@
 import Footer from "@/components/Shared/Footer";
 import Navbar from "@/components/Shared/Navbar";
 import Button from "@/components/UI/Button";
-import React, { useState } from "react";
+// import Banner from "@/containers/Banner";
+import React, { useEffect, useState } from "react";
 import { GiSteeringWheel } from "react-icons/gi";
 import { useRouter } from "next/router";
+import {
+  useGetBusSeatStatusMutation,
+  useGetTripsByUsersMutation,
+} from "@/redux/trip/tripApi";
+import { todayChecker } from "@/utils/helper";
 import dayjs from "dayjs";
+import { useGetMyProfileQuery } from "@/redux/user/userApi";
 import { getSingleTrip } from "@/data/tripSearchResult";
 import BookingSeatsType from "@/components/Shared/BookingSeatsType";
 import { IoSearchOutline, IoWarning } from "react-icons/io5";
 import Loader from "@/components/UI/Loader";
 import TripBanner from "@/components/Shared/TripBanner";
 import duration from "dayjs/plugin/duration";
+import { useInsertBookingMutation } from "@/redux/booking/bookingApi";
 import Tooltip from "@/components/UI/Tooltip";
 import TripStatusDetails from "./tripStatusDetails";
 import { notification } from "antd";
@@ -27,7 +35,32 @@ const Trip = () => {
   const [selectedBusId, setSelectedBusId] = useState("");
   const [selectedSeats, setSelectedSeats] = useState([]);
 
-  const handleSelectBus = (id) => {};
+  const accessToken =
+    typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+
+  const headers = {
+    authorization: accessToken,
+  };
+
+  const { data: getMyProfile } = useGetMyProfileQuery({ headers });
+  // console.log(getMyProfile?.data);
+
+  /*  */
+  const [
+    GetBusSeatStatus,
+    {
+      data: seatStatus,
+      error: seatStatusError,
+      isLoading: seatStatusIsLoading,
+    },
+  ] = useGetBusSeatStatusMutation();
+
+  const handleSelectBus = (id) => {
+    GetBusSeatStatus({ trip_id: id });
+    setSelectedBusId(id);
+    setSelectedSeats([]);
+    setBookingErrorShow(null);
+  };
 
   const handleSelectSeat = (seat) => {
     if (selectedSeats?.includes(seat)) {
@@ -40,17 +73,105 @@ const Trip = () => {
     }
   };
 
-  const handleSubmitBooking = (e, tripId) => {};
+  // const filterTripData = getAllTrip?.filter(
+  //   (trip, index) =>
+  //     trip?.from.toLocaleLowerCase().includes(from?.toLocaleLowerCase()) &&
+  //     trip?.to.toLocaleLowerCase().includes(to?.toLocaleLowerCase()) &&
+  //     trip?.traveling_date === date
+  // );
+
+  /* get all the trip for server */
+  const [
+    getTripSearchByUser,
+    {
+      data: availableTrip,
+      error: availableTripError,
+      isLoading: availableTripIsLoading,
+    },
+  ] = useGetTripsByUsersMutation();
+
+  const [
+    insertBooking,
+    {
+      data: bookingReqResponse,
+      error: bookingReqError,
+      isLoading: bookingReqLoading,
+      isSuccess: insertBookingIsSuccess,
+    },
+  ] = useInsertBookingMutation();
+
+  const handleSubmitBooking = (e, tripId) => {
+    e.preventDefault();
+    const body = {
+      user_id: {
+        name: getMyProfile?.data?.traveler_id?.name
+          ? getMyProfile?.data?.traveler_id?.name
+          : e.target.name.value,
+        email: getMyProfile?.data?.email
+          ? getMyProfile?.data?.email
+          : e.target.email.value,
+      },
+      trip_id: tripId,
+      booking_seat: selectedSeats,
+    };
+    insertBooking(body);
+  };
+
+  useEffect(() => {
+    getTripSearchByUser({
+      departure_time: todayChecker(date),
+      from: from,
+      to: to,
+    });
+  }, [date, to, from]);
+
+  useEffect(() => {
+    // console.log(bookingReqResponse, bookingReqError);
+    if (bookingReqResponse?.statusCode === 201) {
+      api.success({
+        message: `${bookingReqResponse?.message}`,
+        description: (
+          <div>
+            you have 5 min for complete payment other wise booking will be
+            cancel
+          </div>
+        ),
+        placement: "bottomLeft",
+      });
+
+      //** redirect to the payment page
+      const timer = setTimeout(() => {
+        router.push("/payment");
+      }, 3000);
+      return () => clearTimeout(timer);
+    } else if (
+      bookingReqError?.status === 400 ||
+      bookingReqError?.status === 404 ||
+      bookingReqError?.status === 406
+    ) {
+      setBookingErrorShow({
+        status: true,
+        message: bookingReqError?.data?.message,
+      });
+      api.error({
+        message: `${bookingReqError?.data?.message}`,
+        description: (
+          <div>One user can book maximum 4 seats in a single trip</div>
+        ),
+        placement: "bottomLeft",
+      });
+    }
+  }, [bookingReqResponse, bookingReqError]);
 
   return (
     <div className=" bg-gray-100">
       {contextHolder}
       <Navbar />
       <TripBanner />
-      {false ? (
+      {availableTripIsLoading ? (
         <Loader />
-      ) : ["1"].length > 0 ? (
-        ["1"]?.map((trip, index) => (
+      ) : availableTrip?.data?.length > 0 ? (
+        availableTrip?.data?.map((trip, index) => (
           <div
             className="main-container border border-[#5b2192] rounded-md"
             style={{
