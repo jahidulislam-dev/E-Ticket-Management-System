@@ -31,7 +31,7 @@ const SignUpForm = () => {
     };
     delete modified.firstName;
     delete modified.lastName;
-    // signUp(modified); //TODO: api calling
+    signUp(modified);
 
     // Reset the form fields after successful submission
     form.resetFields();

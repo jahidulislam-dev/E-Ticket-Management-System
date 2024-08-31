@@ -2,9 +2,13 @@ import { Table, Modal, Rate } from "antd";
 import { useState } from "react";
 import { BiTrip } from "react-icons/bi";
 import { AiOutlineArrowRight } from "react-icons/ai";
+import { useGetFeedBackQuery } from "@/redux/feedback/feedbackApi";
 import dayjs from "dayjs";
+import Spinner from "@/components/Shared/Spinner";
 
 const ReviewTable = () => {
+  const { data: feedBackData, isLoading } = useGetFeedBackQuery();
+
   const [feedbackDetailsModelOpen, setFeedbackDetailsModelOpen] =
     useState(false);
   const [feedDetailsContent, setFeedDetailsContent] = useState("");
@@ -105,14 +109,18 @@ const ReviewTable = () => {
     <div className="App">
       <header className="App-header">
         <div className="responsive-table-container">
-          <Table
-            columns={columns}
-            dataSource={[]}
-            pagination={{
-              pageSize: 5,
-            }}
-            scroll={{ x: true }}
-          />
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            <Table
+              columns={columns}
+              dataSource={feedBackData?.data}
+              pagination={{
+                pageSize: 5,
+              }}
+              scroll={{ x: true }}
+            ></Table>
+          )}
         </div>
         <Modal
           title="Feedback Details"

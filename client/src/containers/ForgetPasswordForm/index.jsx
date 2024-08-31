@@ -23,7 +23,7 @@ const ForgetPasswordForm = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const router = useRouter();
   const onFinish = (values) => {
-    // login(values);
+    login(values);
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -37,7 +37,7 @@ const ForgetPasswordForm = () => {
       if (loginData?.data?.accessToken) {
         saveToLocalStorage("accessToken", loginData?.data?.accessToken);
         saveToLocalStorage(
-          "jahid-travel-credential",
+          "Jahid-travel-credential",
           loginData?.data?.userData
         ); // TODO:  save it for testing.
       }

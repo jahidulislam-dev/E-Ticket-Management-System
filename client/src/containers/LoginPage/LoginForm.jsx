@@ -37,7 +37,7 @@ const LoginForm = () => {
       if (loginData?.data?.accessToken) {
         saveToLocalStorage("accessToken", loginData?.data?.accessToken);
         saveToLocalStorage(
-          "dhruto-travel-credential",
+          "Jahid-travel-credential",
           loginData?.data?.userData
         ); // TODO:  save it for testing.
       }

@@ -1,7 +1,17 @@
 import { Table } from "antd";
 import dayjs from "dayjs";
+import { useGetAllCompletedAndUpcomingTripForUserQuery } from "@/redux/trip/tripApi";
+import Spinner from "@/components/Shared/Spinner";
 
 const IncompleteTourAndBooking = () => {
+  const {
+    data: UpcomingTrip,
+    error,
+    isLoading,
+  } = useGetAllCompletedAndUpcomingTripForUserQuery({
+    trip_status: "pending",
+  });
+
   const columns = [
     {
       title: "Sr.",
@@ -80,20 +90,32 @@ const IncompleteTourAndBooking = () => {
       title: "Bus Code",
       dataIndex: "bus_code",
     },
+    // {
+    //   title: "Payment Status",
+    //   dataIndex: "payment_status",
+    // },
+    // {
+    //   title: "Pay Now",
+    //   dataIndex: "pay_now",
+    // },
   ];
 
   return (
     <div className="App">
       <header className="App-header">
         <div className="responsive-table-container">
-          <Table
-            columns={columns}
-            dataSource={[]}
-            pagination={{
-              pageSize: 5,
-            }}
-            scroll={{ x: true }}
-          ></Table>
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            <Table
+              columns={columns}
+              dataSource={UpcomingTrip?.data}
+              pagination={{
+                pageSize: 5,
+              }}
+              scroll={{ x: true }}
+            ></Table>
+          )}
         </div>
       </header>
     </div>

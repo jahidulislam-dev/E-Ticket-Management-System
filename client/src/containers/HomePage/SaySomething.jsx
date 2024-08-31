@@ -1,7 +1,15 @@
 import Button from "@/components/UI/Button";
-import React from "react";
+import { useAddSupportConnectionMutation } from "@/redux/feedback/feedbackApi";
+import { Input } from "antd";
+import React, { useEffect } from "react";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const SaySomething = () => {
+  const { TextArea } = Input;
+  const [AddSupportConnection, { data, error, isSuccess, isError }] =
+    useAddSupportConnectionMutation();
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -14,7 +22,51 @@ const SaySomething = () => {
 
     const body = { first_name, last_name, email, phone, subject, message };
     console.log(first_name, last_name, email, phone, subject, message);
+    AddSupportConnection(body);
+
+    e.target.first_name.value = "";
+    e.target.last_name.value = "";
+    e.target.email.value = "";
+    e.target.phone.value = "";
+    e.target.subject.value = "";
+    e.target.message.value = "";
   };
+
+  useEffect(() => {
+    if (data?.statusCode === 200) {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${data?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else if (
+      error?.status === 400 ||
+      error?.status === 406 ||
+      error?.status === 403
+    ) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${error?.data?.errorMessage[0]?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  }, [data, error]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Your message was successfully sent!");
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(error?.data?.message || "Something went wrong");
+    }
+  }, [isError, error]);
 
   return (
     <div className="main-container my-28 lg:my-32">
@@ -24,7 +76,8 @@ const SaySomething = () => {
             Let's stay connected
           </h1>
           <p className="text-gray-600 text-md mt-4 lg:mt-6 mb-8 lg:mb-10">
-            if you have any query about our services please let us know here!
+            We are always looking for new opportunities to work together. We are
+            always looking for new opportunities to work together.
           </p>
           <form
             onSubmit={(e) => handleSubmit(e)}
@@ -82,7 +135,7 @@ const SaySomething = () => {
               style={{ borderLeft: "4px solid" }}
             >
               <p>Email Us:</p>
-              <h4 className="text-xl font-bold mt-2"></h4>
+              <h4 className="text-xl font-bold mt-2">Info@Jahidtravel.com</h4>
             </div>
           </div>
           <div className="py-6" style={{ borderBottom: "1px solid lightgray" }}>
@@ -91,7 +144,7 @@ const SaySomething = () => {
               style={{ borderLeft: "4px solid" }}
             >
               <p>Call Us:</p>
-              <h4 className="text-xl font-bold mt-2"></h4>
+              <h4 className="text-xl font-bold mt-2">(406) 555-0120</h4>
             </div>
           </div>
           <div className="py-6" style={{ borderBottom: "1px solid lightgray" }}>
@@ -100,7 +153,9 @@ const SaySomething = () => {
               style={{ borderLeft: "4px solid" }}
             >
               <p>Office Address:</p>
-              <h4 className="text-xl font-bold mt-2"></h4>
+              <h4 className="text-xl font-bold mt-2">
+                Gulshan, Dhaka-1212, Bangladesh
+              </h4>
             </div>
           </div>
         </div>

@@ -1,9 +1,14 @@
 import { Col, Row, Input, Carousel, DatePicker, Select, Form } from "antd";
+// import React from "react";
 import Image from "next/image";
 import moment from "moment";
 import SectionTitle from "@/components/Shared/SectionTitle";
 import Button from "@/components/UI/Button";
+import Swal from "sweetalert2";
 import { validateEmail } from "@/utils/helper";
+import { useReserveBusMutation } from "@/redux/booking/bookingApi";
+import dayjs from "dayjs";
+import { useEffect } from "react";
 
 const initialData = {
   busSeats: "",
@@ -24,9 +29,49 @@ const ReserveABus = () => {
   };
   const [form] = Form.useForm();
 
+  const [AddReserveBus, { data, error, isLoading }] = useReserveBusMutation();
+
   const onFinish = (values) => {
     console.log("Success:", values);
+    const journeyDateTime = dayjs(values.journeyDate).format(
+      "YYYY-MM-DDTHH:mm:ss.sss"
+    );
+    const journeyEndTime = dayjs(values.journeyEnd).format(
+      "YYYY-MM-DDTHH:mm:ss.sss"
+    );
+
+    const journeyDateTimePayload = {
+      ...values,
+      departure_time: journeyDateTime,
+      arrival_time: journeyEndTime,
+    };
+    AddReserveBus(journeyDateTimePayload);
   };
+
+  useEffect(() => {
+    if (data?.statusCode === 200) {
+      form.setFieldsValue(initialData);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: `${data?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else if (
+      error?.status === 400 ||
+      error?.status === 406 ||
+      error?.status === 403
+    ) {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: `${error?.data?.errorMessage[0]?.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  }, [data, error]);
 
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
