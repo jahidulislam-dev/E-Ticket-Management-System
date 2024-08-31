@@ -38,28 +38,6 @@ const AuthLayout = ({ children }) => {
                 />
               </button>
             </div>
-            {isDropdownOpen && (
-              <div
-                className="absolute -left-[90px] md:left-0 z-50 mt-2 w-56 origin-top-right rounded-md bg-gray-200 shadow-lg ring-1 ring-green-500 ring-opacity-5 focus:outline-none"
-                role="menu"
-                aria-orientation="vertical"
-                aria-labelledby="menu-button"
-                tabIndex="-1"
-              >
-                <div className="py-1">
-                  <div className="text-gray-600 hover:bg-[#f3f4f9] block px-4 py-2 text-base duration-300">
-                    <h4>Admin</h4>
-                    <p>Email: admin@gmail.com</p>
-                    <p>Password: 123456</p>
-                  </div>
-                  <div className="text-gray-600 hover:bg-[#f3f4f9] block px-4 py-2 text-base duration-300">
-                    <h4>Traveler</h4>
-                    <p>Email: user@gmail.com</p>
-                    <p>Password: 123456</p>
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
           <div className="bg-gray-200 flex p-2 items-center rounded mb-4">
             <div className="w-1/2 text-center  cursor-pointer ">
