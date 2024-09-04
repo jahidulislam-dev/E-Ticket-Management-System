@@ -240,7 +240,7 @@ const CreateTripForm = () => {
         >
           <InputNumber
             formatter={(values) =>
-              `৳ ${values}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              `$ ${values}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             }
             className="w-full"
             placeholder="Type trip fare"

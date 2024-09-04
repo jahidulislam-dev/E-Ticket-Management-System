@@ -65,7 +65,7 @@ const ReserveBusHistoryList = ({ data, isLoading }) => {
       dataIndex: "fare_cost",
       minWidth: 200,
       render: (fare_cost) => {
-        return <p>{fare_cost} Taka</p>;
+        return <p>${fare_cost}</p>;
       },
     },
     {

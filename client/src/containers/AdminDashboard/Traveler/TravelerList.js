@@ -40,26 +40,6 @@ const TravelerList = () => {
       dataIndex: "age",
       minWidth: 200,
     },
-    {
-      title: "Total Trip",
-      dataIndex: "total_trip",
-      minWidth: 200,
-    },
-    {
-      key: "5",
-      title: "Update Info",
-      render: (TravelerData) => {
-        return (
-          <div style={{ color: "red", marginLeft: "20px" }}>
-            <EditOutlined
-              onClick={() => {
-                onEditTrip(TravelerData);
-              }}
-            />
-          </div>
-        );
-      },
-    },
   ];
 
   const onEditTrip = (TravelerData) => {
@@ -109,8 +89,6 @@ const demoData = [
     image: "https://robohash.org/hicveldicta.png",
     email: "user1@example.com",
     phone: "123-456-7890",
-    age: 28,
-    total_trip: 10,
   },
   {
     key: "2",
@@ -119,8 +97,6 @@ const demoData = [
     image: "https://robohash.org/doloremquesintcorrupti.png",
     email: "user2@example.com",
     phone: "987-654-3210",
-    age: 35,
-    total_trip: 15,
   },
   {
     key: "3",
@@ -129,7 +105,5 @@ const demoData = [
     image: "https://robohash.org/consequunturautconsequatur.png",
     email: "user3@example.com",
     phone: "555-123-4567",
-    age: 22,
-    total_trip: 5,
   },
 ];

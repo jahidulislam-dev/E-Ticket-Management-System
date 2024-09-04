@@ -55,14 +55,6 @@ const Footer = () => {
                     <li>
                       <Link
                         className="text-gray-700 font-semibold block pb-2 text-sm"
-                        href="/blog"
-                      >
-                        Blog
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        className="text-gray-700 font-semibold block pb-2 text-sm"
                         href="/"
                       >
                         Bus
@@ -124,46 +116,6 @@ const Footer = () => {
                 </ul>
               </div>
             </div>
-            <div className="w-full md:w-6/12 lg:w-3/12 flex justify-start lg:justify-center">
-              <div>
-                <span className="block uppercase text-gray-800 text-base font-bold mb-2">
-                  Weekly Newsletter
-                </span>
-                <div>
-                  <span className="text-gray-700 font-semibold block pb-2 text-sm">
-                    Get our offers and discount via email.
-                  </span>
-                  <Form form={form} onFinish={handleSubscribe}>
-                    <Form.Item
-                      name="email"
-                      className="mb-0"
-                      rules={[
-                        { required: true, message: "Please enter your email!" },
-                      ]}
-                    >
-                      <Input
-                        size="large"
-                        allowClear
-                        className="hover:border-red-500 border-2 focus:border-red-500 focus-within:border-red-500 rounded"
-                        placeholder="Enter Your Email"
-                        prefix={<MailOutlined />}
-                      />
-                    </Form.Item>
-
-                    <Form.Item>
-                      <Button
-                        size="large"
-                        type="primary"
-                        htmlType="submit"
-                        className="w-full mt-3 rounded bg-[#d84e55] hover:bg-red-400 duration-200 font-semibold"
-                      >
-                        Subscribe
-                      </Button>
-                    </Form.Item>
-                  </Form>
-                </div>
-              </div>
-            </div>
           </div>
           <hr className="my-6 border-3 border-solid border-gray-800" />
           <div className="flex flex-col-reverse md:flex-row items-center justify-between">
@@ -172,33 +124,6 @@ const Footer = () => {
                 All Rights Reserved &copy; Jahid Travel Online Service{" "}
                 <span id="get-current-year">{year}</span>
               </div>
-            </div>
-            {/* social icons */}
-            <div className=" flex justify-center mb-4 md:mb-0 md:justify-end w-full md:w-6/12">
-              <button
-                className="cursor-pointer border-none bg-white text-black hover:text-[#0080F7] duration-300 text-lightBlue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-md outline-none focus:outline-none mr-2"
-                type="button"
-              >
-                <IoMdMail className="w-full h-full p-2" />
-              </button>
-              <button
-                className="cursor-pointer border-none bg-white text-black hover:text-[#1877F2] duration-300 text-lightBlue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-md outline-none focus:outline-none mr-2"
-                type="button"
-              >
-                <FaFacebookSquare className="w-full h-full p-2" />
-              </button>
-              <button
-                className="cursor-pointer border-none bg-white text-black hover:text-[#CD201F] duration-300 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-md outline-none focus:outline-none mr-2"
-                type="button"
-              >
-                <IoLogoYoutube className="w-full h-full p-2" />
-              </button>
-              <button
-                className="cursor-pointer border-none bg-white text-black hover:text-[#0077b5] duration-300 text-blueGray-800 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-md outline-none focus:outline-none mr-2"
-                type="button"
-              >
-                <FaLinkedin className="w-full h-full p-[6px]" />
-              </button>
             </div>
           </div>
         </div>

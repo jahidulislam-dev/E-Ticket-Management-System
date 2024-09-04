@@ -122,7 +122,7 @@ const TripStatusDetails = ({ trip, selectedBusId, handleSelectBus }) => {
       </li>
       <li className="flex-1 p-3 lg:p-7 text-right justify-end">
         <h3 className="text-lg md:text-xl lg-text-2xl font-semibold text-[#5b2192] mb-2">
-          ৳{trip?.ticket_price}
+          ${trip?.ticket_price}
         </h3>
         <div className="flex justify-end">
           <button

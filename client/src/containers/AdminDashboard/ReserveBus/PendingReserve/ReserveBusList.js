@@ -94,21 +94,6 @@ const ReserveBusList = ({ data, isLoading }) => {
         );
       },
     },
-    {
-      key: "5",
-      title: "Edit details",
-      render: (BusData) => {
-        return (
-          <div style={{ color: "red", marginLeft: "20px" }}>
-            <EditOutlined
-              onClick={() => {
-                onEditTrip(BusData);
-              }}
-            />
-          </div>
-        );
-      },
-    },
   ];
 
   const onEditTrip = (BusData) => {

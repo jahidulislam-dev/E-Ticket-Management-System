@@ -7,8 +7,8 @@ import { BsCalendarDate, BsBusFront } from "react-icons/bs";
 import { TbBusStop } from "react-icons/tb";
 import { Select } from "antd";
 
-const deptFrom = ["Dhaka", "Sylhet"];
-const ArrTo = ["Sylhet", "Dhaka", "Brahmanbaria", "Bogora"];
+const deptFrom = ["Champion", "Ashton", "Bliss"];
+const ArrTo = ["Gladstone", "Rexburg", "Jerome", "Mountain "];
 
 const SearchBarV2 = () => {
   const disabledDate = (current) => {

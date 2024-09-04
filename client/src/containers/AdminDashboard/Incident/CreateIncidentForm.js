@@ -121,7 +121,7 @@ const CreateIncidentForm = () => {
               <InputNumber
                 className="h-10 w-full flex items-center"
                 formatter={(values) =>
-                  `৳ ${values}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                  `$ ${values}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                 }
                 placeholder="Type cost"
               />

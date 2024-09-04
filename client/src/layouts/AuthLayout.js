@@ -18,26 +18,6 @@ const AuthLayout = ({ children }) => {
       <div className="flex justify-center items-center min-h-screen py-16 auth-bg">
         <div className="relative  md:w-3/12 h-auto p-6 rounded-xl bg-slate-50 border-solid border-2 border-slate-900">
           <div className="absolute -top-32 md:-top-16 right-[41%] md:-right-16">
-            <div className="relative inline-block text-left">
-              <button
-                type="button"
-                className="border-gray-800 rounded-full flex items-center justify-center"
-                id="menu-button"
-                aria-expanded={isDropdownOpen}
-                aria-haspopup="true"
-                onClick={toggleDropdown}
-              >
-                <Image
-                  alt="avatar"
-                  className={`w-10 h-10 rounded-full p-[2px] bg-white cursor-pointer`}
-                  src="https://i.ibb.co/nrtwzQd/avatar-boy.webp"
-                  decoding="async"
-                  loading="lazy"
-                  width={300}
-                  height={300}
-                />
-              </button>
-            </div>
           </div>
           <div className="bg-gray-200 flex p-2 items-center rounded mb-4">
             <div className="w-1/2 text-center  cursor-pointer ">

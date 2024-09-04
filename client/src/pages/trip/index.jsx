@@ -140,9 +140,9 @@ const Trip = () => {
       });
 
       //** redirect to the payment page
-      const timer = setTimeout(() => {
-        router.push("/payment");
-      }, 3000);
+      // const timer = setTimeout(() => {
+      //   router.push("/payment");
+      // }, 3000);
       return () => clearTimeout(timer);
     } else if (
       bookingReqError?.status === 400 ||
@@ -453,14 +453,14 @@ const Trip = () => {
                               <td className="d-none d-sm-table-cell py-2">
                                 E-Class
                               </td>
-                              <td className="py-2">৳ {trip?.ticket_price}</td>
+                              <td className="py-2">$ {trip?.ticket_price}</td>
                             </tr>
                           ))}
                         </tbody>
                       </table>
                       <div className="w-10/12 lg:w-1/2 mx-auto mt-5">
                         <h4 className="text-right mt-4 text-lg font-semibold ">
-                          Total: ৳ {selectedSeats?.length * trip?.ticket_price}
+                          Total: $ {selectedSeats?.length * trip?.ticket_price}
                         </h4>
                       </div>
                       <div className="border rounded-lg mt-10 w-10/12 lg:w-1/2 mx-auto">

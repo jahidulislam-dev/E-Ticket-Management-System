@@ -126,7 +126,7 @@ const UpdateIncidentForm = ({ editingIncident, resetEditing }) => {
         >
           <InputNumber
             formatter={(values) =>
-              `৳ ${values}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              `$ ${values}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             }
             placeholder="Type cost"
           />
