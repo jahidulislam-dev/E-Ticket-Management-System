@@ -109,7 +109,7 @@ const getDashboard = () => __awaiter(void 0, void 0, void 0, function* () {
             totalTraveler: totalTraveler,
             totalDriver: totalDriver,
             totalBus: totalBus,
-            totalTrip: totalRoute,
+            totalRoute: totalRoute,
         },
     };
 });

@@ -69,36 +69,6 @@ const travelerUserInfoSendByEmail = (message) => {
                       <p style="margin-top: 0; margin-right: 0; margin-bottom: 2px; margin-left: 16px;">
                         Password: <span style="font-weight: 600;">${message.password}</span>
                       </p>
-              
-                      <p>
-                        <p style="margin-bottom: -12px">To help you get started, here are a few key features and benefits
-                          of your TMS account:</p>
-              
-              
-                        <span style="font-weight: 600">Easy Booking Process:</span>
-                        Our user-friendly platform ensures a smooth and straightforward
-                        booking experience. Explore various bus routes, choose your preferred
-                        seat, and secure your tickets with just a few clicks.
-                        <br />
-                        <span style="font-weight: 600">Exclusive Offers:</span>
-                        As a TMS member, you will be among the first to know about
-                        our special promotions, discounts, and exclusive offers. Keep an eye
-                        on your inbox for exciting deals on your favorite routes!
-                        <br />
-                        <span style="font-weight: 600">Personalized Travel History:</span>
-                        Track and manage your travel history effortlessly through your
-                        account. Access details of your past trips, upcoming journeys, and any
-                        exclusive rewards you've earned along the way. <br />
-                        <span style="font-weight: 600">24/7 Customer Support:</span>
-                        We're here for you! Our dedicated customer support team is available
-                        24/7 to assist you with any inquiries, concerns, or assistance you may
-                        need. Feel free to reach out at +880156386034.
-                        <br /> <br/>
-              
-                        Thank you for choosing TMS for your journey needs. We look
-                        forward to being a part of your travel adventures!
-                      </p>
-              
                       <p style="font-weight: 600; margin-bottom: 0px;">Safe Travels,</p>
                       <p style="margin-top: 0px">TMS Team</p>
                     </div>
