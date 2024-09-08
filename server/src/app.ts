@@ -4,12 +4,12 @@ import globalErrorHandler from './app/middlewares/globalErrorHandler'
 import httpStatus from 'http-status'
 import router from './app/router'
 import cookieParser from 'cookie-parser'
-// import corsOptions from './config/corsOptions'
+import corsOptions from './config/corsOptions'
 
 const app: Application = express()
 
 // cors
-app.use(cors())
+app.use(cors(corsOptions))
 
 // parser
 app.use(express.json())
