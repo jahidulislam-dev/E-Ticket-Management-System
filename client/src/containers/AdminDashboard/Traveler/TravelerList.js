@@ -1,27 +1,27 @@
 import { Button, Table, Modal, Avatar } from "antd";
 import { useState } from "react";
 import { EditOutlined } from "@ant-design/icons";
-import { useGetAllTravelersQuery } from "@/redux/traveler/traveler";
 
-const TravelerList = () => {
-  const { data, isLoading } = useGetAllTravelersQuery();
-
+const TravelerList = ({ data, isLoading }) => {
   console.log("traveler data", data?.data);
   const [isEditing, setIsEditing] = useState(false);
   const [editingTraveler, setEditingTraveler] = useState(null);
-  const [dataSource, setDataSource] = useState(demoData);
+  const [dataSource, setDataSource] = useState(data?.data);
   const columns = [
     {
       title: "Sr.",
       dataIndex: "sr",
       minWidth: 200,
+      render: (text, record, index) => {
+        return `${index + 1}`;
+      },
     },
     {
       title: "Image",
       dataIndex: "image",
       minWidth: 200,
       render: (image) => {
-        return <Avatar src={image} />;
+        return <Avatar src={image?.avatar} />;
       },
     },
     {

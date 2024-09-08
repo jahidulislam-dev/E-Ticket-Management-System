@@ -124,7 +124,7 @@ const getDashboard = async (): Promise<any> => {
       totalTraveler: totalTraveler,
       totalDriver: totalDriver,
       totalBus: totalBus,
-      totalTrip: totalRoute,
+      totalRoute: totalRoute,
     },
   }
 }

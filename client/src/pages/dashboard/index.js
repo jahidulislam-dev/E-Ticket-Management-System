@@ -13,13 +13,13 @@ const Dashboard = () => {
   return (
     <>
       <PageTitle title={"Admin Dashboard"} />
-      {"admin" === userRole.ADMIN && (
+      {"admin" === userRole.ADMIN && !isLoading && (
         <div className="max-w-5xl mx-auto w-[95%]">
           <div className="lg:main-container grid grid-cols-1 md:grid-cols-2 gap-5 justify-center ">
-            <UserChart data={data?.data?.totalTraveler} />
-            <DriversChart data={data?.data?.totalDriver} />
-            <BusChart data={data?.data?.totalBus} />
-            <RoadChart data={data?.data?.totalRoute} />
+            <UserChart data={data?.data?.data?.totalTraveler} />
+            <DriversChart data={data?.data?.data?.totalDriver} />
+            <BusChart data={data?.data?.data?.totalBus} />
+            <RoadChart data={data?.data?.data?.totalRoute} />
           </div>
         </div>
       )}
