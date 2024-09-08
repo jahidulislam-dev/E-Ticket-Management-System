@@ -9,10 +9,10 @@ const globalErrorHandler_1 = __importDefault(require("./app/middlewares/globalEr
 const http_status_1 = __importDefault(require("http-status"));
 const router_1 = __importDefault(require("./app/router"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
-const corsOptions_1 = __importDefault(require("./config/corsOptions"));
+// import corsOptions from './config/corsOptions'
 const app = (0, express_1.default)();
 // cors
-app.use((0, cors_1.default)(corsOptions_1.default));
+app.use((0, cors_1.default)());
 // parser
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
