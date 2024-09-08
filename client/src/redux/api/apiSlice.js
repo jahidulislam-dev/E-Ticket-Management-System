@@ -22,6 +22,7 @@ export const apiSlice = createApi({
     "booking",
     "reserveBus",
     "support",
+    "traveler",
   ],
   endpoints: () => ({}),
 });

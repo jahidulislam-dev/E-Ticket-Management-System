@@ -134,8 +134,6 @@ const SaySomething = () => {
               className="border-l-red-500 px-4"
               style={{ borderLeft: "4px solid" }}
             >
-              <p>Email Us:</p>
-              <h4 className="text-xl font-bold mt-2">Info@Jahidtravel.com</h4>
             </div>
           </div>
           <div className="py-6" style={{ borderBottom: "1px solid lightgray" }}>
@@ -143,8 +141,7 @@ const SaySomething = () => {
               className="border-l-gray-500 px-4"
               style={{ borderLeft: "4px solid" }}
             >
-              <p>Call Us:</p>
-              <h4 className="text-xl font-bold mt-2">(406) 555-0120</h4>
+              
             </div>
           </div>
           <div className="py-6" style={{ borderBottom: "1px solid lightgray" }}>
@@ -152,10 +149,7 @@ const SaySomething = () => {
               className="border-l-red-500 px-4"
               style={{ borderLeft: "4px solid" }}
             >
-              <p>Office Address:</p>
-              <h4 className="text-xl font-bold mt-2">
-                Gulshan, Dhaka-1212, Bangladesh
-              </h4>
+              
             </div>
           </div>
         </div>

@@ -15,7 +15,7 @@ const reviewData = [
   },
   {
     review:
-      "Jahid Travel excelled in communication. Clear instructions were provided before and during the journey. Announcements were made promptly, keeping passengers informed about upcoming stops and any relevant information!",
+      "TMS excelled in communication. Clear instructions were provided before and during the journey. Announcements were made promptly, keeping passengers informed about upcoming stops and any relevant information!",
     name: "Luci Jeny",
     designation: "Businessman",
     ratings: 3.5,
@@ -36,7 +36,7 @@ const reviewData = [
   },
   {
     review:
-      "Jahid Travel impressed me with their commitment to punctuality. The bus arrived on time, and the entire journey adhered to the schedule. This reliability made planning my trip much smoother!",
+      "TMS impressed me with their commitment to punctuality. The bus arrived on time, and the entire journey adhered to the schedule. This reliability made planning my trip much smoother!",
     name: "Samu Fika",
     designation: "Traveler",
     ratings: 4,

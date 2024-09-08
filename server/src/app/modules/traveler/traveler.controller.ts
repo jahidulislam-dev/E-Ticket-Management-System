@@ -60,8 +60,21 @@ const updateTraveler = catchAsync(async (req: Request, res: Response) => {
     data: result,
   })
 })
+
+const getDashBoard = catchAsync(async (req: Request, res: Response) => {
+  const result = await TravelerService.getDashboard()
+
+  sendResponse<any>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'dashboard data retrieved successfully!',
+    data: result,
+  })
+})
+
 export const TravelerController = {
   getAllTraveler,
   getSingleTraveler,
   updateTraveler,
+  getDashBoard,
 }

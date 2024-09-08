@@ -5,7 +5,7 @@ import TravelerListContainer from "@/containers/AdminDashboard/Traveler/Traveler
 import React from "react";
 
 const TravelerList = () => {
-  return <>{"admin" === userRole.ADMIN && <TravelerListContainer />}</>;
+  return <>{"admin" === userRole.ADMIN && <TravelerListContainer  />}</>;
 };
 
 export default TravelerList;

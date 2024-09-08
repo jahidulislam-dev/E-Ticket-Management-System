@@ -37,7 +37,7 @@ export const travelerUserInfoSendByEmail = (message: IMessage) => {
                           <img src="https://i.ibb.co/cXCWRsG/bus.png" alt="bus" />
                         </div>
                         <div style="margin-left: 16px">
-                          <h1 style="margin-bottom: 0px; font-size: 28px;">Jahid Travel</h1>
+                          <h1 style="margin-bottom: 0px; font-size: 28px;">TMS</h1>
                           <h3 style="margin-top: 0;">Book with Ease, Travel with Speed</h3>
                         </div>
                       </div>
@@ -45,7 +45,7 @@ export const travelerUserInfoSendByEmail = (message: IMessage) => {
                       <h2>Hello ${message.name},</h2>
               
                       <p>
-                        Cheers to joining Jahid Travel - your go-to spot for hassle-free bus
+                        Cheers to joining TMS - your go-to spot for hassle-free bus
                         travel! 🚌 We're pumped to be your travel companion and make your bus
                         journeys a breeze.
                       </p>
@@ -67,7 +67,7 @@ export const travelerUserInfoSendByEmail = (message: IMessage) => {
               
                       <p>
                         <p style="margin-bottom: -12px">To help you get started, here are a few key features and benefits
-                          of your Dhruto Travel account:</p>
+                          of your TMS account:</p>
               
               
                         <span style="font-weight: 600">Easy Booking Process:</span>
@@ -76,7 +76,7 @@ export const travelerUserInfoSendByEmail = (message: IMessage) => {
                         seat, and secure your tickets with just a few clicks.
                         <br />
                         <span style="font-weight: 600">Exclusive Offers:</span>
-                        As a Dhruto Travel member, you will be among the first to know about
+                        As a TMS member, you will be among the first to know about
                         our special promotions, discounts, and exclusive offers. Keep an eye
                         on your inbox for exciting deals on your favorite routes!
                         <br />
@@ -90,12 +90,12 @@ export const travelerUserInfoSendByEmail = (message: IMessage) => {
                         need. Feel free to reach out at +880156386034.
                         <br /> <br/>
               
-                        Thank you for choosing Dhruto Travel for your journey needs. We look
+                        Thank you for choosing TMS for your journey needs. We look
                         forward to being a part of your travel adventures!
                       </p>
               
                       <p style="font-weight: 600; margin-bottom: 0px;">Safe Travels,</p>
-                      <p style="margin-top: 0px">Dhruto Travel Team</p>
+                      <p style="margin-top: 0px">TMS Team</p>
                     </div>
                   </div>
                     </div>
@@ -104,8 +104,8 @@ export const travelerUserInfoSendByEmail = (message: IMessage) => {
   const mailOption = {
     from: 'mdkzaman2025@gmail.com',
     to: message.email,
-    subject: 'Welcome to Dhruto Travel - Your Bus Adventure Starts Now!',
-    // subject: 'Account credential of Dhruto travel',
+    subject: 'Welcome to TMS - Your Bus Adventure Starts Now!',
+    // subject: 'Account credential of TMS',
     html: messageBody,
   }
 

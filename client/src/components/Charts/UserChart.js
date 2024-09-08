@@ -1,7 +1,7 @@
 import Image from "next/image";
 import MainChart from "./MainChart";
 
-const UserChart = () => {
+const UserChart = ({ data }) => {
   const options = {
     chart: {
       type: "donut",
@@ -43,7 +43,7 @@ const UserChart = () => {
         },
       },
     ],
-    series: [484],
+    series: [data ?? 10],
     labels: ["Users"],
   };
 

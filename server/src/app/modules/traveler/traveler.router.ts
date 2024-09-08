@@ -8,6 +8,7 @@ import multer from '../../middlewares/multer'
 const router = express.Router()
 
 router.get('/', TravelerController.getAllTraveler)
+router.get('/get-dashBroad', TravelerController.getDashBoard)
 router.patch(
   '/traveler-profile',
   auth(ENUM_USER_ROLE.USER),

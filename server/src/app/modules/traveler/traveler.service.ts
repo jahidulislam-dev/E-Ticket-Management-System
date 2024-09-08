@@ -11,6 +11,10 @@ import { travelerSearchableFields } from './traveler.constants'
 import { User } from '../user/user.model'
 import cloudinary from '../../../config/cloudinary'
 import { JwtPayload } from 'jsonwebtoken'
+import { Driver } from '../driver/driver.model'
+import { Bus } from '../bus/bus.model'
+import { Trip } from '../trip/trip.model'
+import { Route } from '../route/route.model'
 
 const getAllTraveler = async (
   filters: ITravelerFilter,
@@ -80,7 +84,6 @@ const updateTraveler = async (
   delete payload._id
   delete payload.email
 
-
   const isExistUser = await User.findById(user?.id)
 
   if (!isExistUser) {
@@ -90,12 +93,16 @@ const updateTraveler = async (
   const traveler = await Traveler.findById(isExistUser.traveler_id)
   // console.log(traveler)
 
-  if (payload.image && traveler && traveler.image && traveler.image.avatar_public_url) {
+  if (
+    payload.image &&
+    traveler &&
+    traveler.image &&
+    traveler.image.avatar_public_url
+  ) {
     await cloudinary.uploader.destroy(traveler.image.avatar_public_url)
     // console.log(result);
     // console.log('image here', traveler.image.avatar_public_url)
   }
-
 
   const result = await Traveler.findByIdAndUpdate(
     isExistUser.traveler_id,
@@ -106,8 +113,25 @@ const updateTraveler = async (
   return result
 }
 
+const getDashboard = async (): Promise<any> => {
+  const totalTraveler = await Traveler.countDocuments()
+  const totalDriver = await Driver.countDocuments()
+  const totalBus = await Bus.countDocuments()
+  const totalRoute = await Route.countDocuments()
+
+  return {
+    data: {
+      totalTraveler: totalTraveler,
+      totalDriver: totalDriver,
+      totalBus: totalBus,
+      totalTrip: totalRoute,
+    },
+  }
+}
+
 export const TravelerService = {
   getAllTraveler,
   getSingleTraveler,
   updateTraveler,
+  getDashboard,
 }

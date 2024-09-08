@@ -1,7 +1,7 @@
 import Image from "next/image";
 import MainChart from "./MainChart";
 
-const RoadChart = () => {
+const RoadChart = ({ data }) => {
   const options = {
     chart: {
       type: "donut",
@@ -43,7 +43,7 @@ const RoadChart = () => {
         },
       },
     ],
-    series: [12],
+    series: [data ?? 10],
     labels: ["Roads"],
   };
 

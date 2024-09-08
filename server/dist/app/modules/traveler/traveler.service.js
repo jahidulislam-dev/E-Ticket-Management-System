@@ -31,6 +31,9 @@ const traveler_modal_1 = require("./traveler.modal");
 const traveler_constants_1 = require("./traveler.constants");
 const user_model_1 = require("../user/user.model");
 const cloudinary_1 = __importDefault(require("../../../config/cloudinary"));
+const driver_model_1 = require("../driver/driver.model");
+const bus_model_1 = require("../bus/bus.model");
+const route_model_1 = require("../route/route.model");
 const getAllTraveler = (filters, paginationOptions) => __awaiter(void 0, void 0, void 0, function* () {
     const { searchTerm } = filters, filtersData = __rest(filters, ["searchTerm"]);
     const andConditions = [];
@@ -85,7 +88,10 @@ const updateTraveler = (user, payload) => __awaiter(void 0, void 0, void 0, func
     }
     const traveler = yield traveler_modal_1.Traveler.findById(isExistUser.traveler_id);
     // console.log(traveler)
-    if (payload.image && traveler && traveler.image && traveler.image.avatar_public_url) {
+    if (payload.image &&
+        traveler &&
+        traveler.image &&
+        traveler.image.avatar_public_url) {
         yield cloudinary_1.default.uploader.destroy(traveler.image.avatar_public_url);
         // console.log(result);
         // console.log('image here', traveler.image.avatar_public_url)
@@ -93,8 +99,23 @@ const updateTraveler = (user, payload) => __awaiter(void 0, void 0, void 0, func
     const result = yield traveler_modal_1.Traveler.findByIdAndUpdate(isExistUser.traveler_id, payload, { new: true });
     return result;
 });
+const getDashboard = () => __awaiter(void 0, void 0, void 0, function* () {
+    const totalTraveler = yield traveler_modal_1.Traveler.countDocuments();
+    const totalDriver = yield driver_model_1.Driver.countDocuments();
+    const totalBus = yield bus_model_1.Bus.countDocuments();
+    const totalRoute = yield route_model_1.Route.countDocuments();
+    return {
+        data: {
+            totalTraveler: totalTraveler,
+            totalDriver: totalDriver,
+            totalBus: totalBus,
+            totalTrip: totalRoute,
+        },
+    };
+});
 exports.TravelerService = {
     getAllTraveler,
     getSingleTraveler,
     updateTraveler,
+    getDashboard,
 };

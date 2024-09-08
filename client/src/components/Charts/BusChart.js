@@ -1,7 +1,7 @@
 import Image from "next/image";
 import MainChart from "./MainChart";
 
-const BusChart = () => {
+const BusChart = ({ data }) => {
   const options = {
     chart: {
       type: "donut",
@@ -43,7 +43,7 @@ const BusChart = () => {
     dataLabels: {
       enabled: false,
     },
-    series: [18],
+    series: [data ?? 10],
     labels: ["Buses"],
   };
 

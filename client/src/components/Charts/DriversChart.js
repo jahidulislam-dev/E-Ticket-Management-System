@@ -1,7 +1,7 @@
 import Image from "next/image";
 import MainChart from "./MainChart";
 
-const DriversChart = () => {
+const DriversChart = ({ data }) => {
   const options = {
     theme: {
       monochrome: {
@@ -43,8 +43,8 @@ const DriversChart = () => {
         },
       },
     ],
-    series: [26, 22],
-    labels: ["Drivers", "Conductor"],
+    series: [data ?? 10],
+    labels: ["Drivers"],
   };
 
   return (
