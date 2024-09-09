@@ -81,8 +81,8 @@ const Footer = () => {
                   <li>
                     <Link
                       className="text-gray-700 font-semibold block pb-2 text-sm"
-                      href="https://github.com/creativetimofficial/notus-js/blob/main/LICENSE.md?ref=njs-profile"
-                      target="_blank"
+                      href=""
+                      target=""
                     >
                       Our License
                     </Link>
@@ -90,8 +90,8 @@ const Footer = () => {
                   <li>
                     <Link
                       className="text-gray-700 font-semibold block pb-2 text-sm"
-                      href="https://creative-tim.com/terms?ref=njs-profile"
-                      target="_blank"
+                      href=""
+                      target=""
                     >
                       Terms &amp; Conditions
                     </Link>
@@ -99,8 +99,8 @@ const Footer = () => {
                   <li>
                     <Link
                       className="text-gray-700 font-semibold block pb-2 text-sm"
-                      href="https://creative-tim.com/privacy?ref=njs-profile"
-                      target="_blank"
+                      href=""
+                      target=""
                     >
                       Privacy Policy
                     </Link>
