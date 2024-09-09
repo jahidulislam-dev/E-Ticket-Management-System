@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet";
 const PageTitle = ({ title }) => {
   return (
     <Helmet>
-      <title>{title} | TMS</title>
+      <title>{title} | BTMS</title>
     </Helmet>
   );
 };

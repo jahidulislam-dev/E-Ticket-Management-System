@@ -42,7 +42,7 @@ const travelerUserInfoSendByEmail = (message) => {
                           <img src="https://i.ibb.co/cXCWRsG/bus.png" alt="bus" />
                         </div>
                         <div style="margin-left: 16px">
-                          <h1 style="margin-bottom: 0px; font-size: 28px;">TMS</h1>
+                          <h1 style="margin-bottom: 0px; font-size: 28px;">BTMS</h1>
                           <h3 style="margin-top: 0;">Book with Ease, Travel with Speed</h3>
                         </div>
                       </div>
@@ -50,7 +50,7 @@ const travelerUserInfoSendByEmail = (message) => {
                       <h2>Hello ${message.name},</h2>
               
                       <p>
-                        Cheers to joining TMS - your go-to spot for hassle-free bus
+                        Cheers to joining BTMS - your go-to spot for hassle-free bus
                         travel! 🚌 We're pumped to be your travel companion and make your bus
                         journeys a breeze.
                       </p>
@@ -70,7 +70,7 @@ const travelerUserInfoSendByEmail = (message) => {
                         Password: <span style="font-weight: 600;">${message.password}</span>
                       </p>
                       <p style="font-weight: 600; margin-bottom: 0px;">Safe Travels,</p>
-                      <p style="margin-top: 0px">TMS Team</p>
+                      <p style="margin-top: 0px">BTMS Team</p>
                     </div>
                   </div>
                     </div>
@@ -78,8 +78,8 @@ const travelerUserInfoSendByEmail = (message) => {
     const mailOption = {
         from: 'mdkzaman2025@gmail.com',
         to: message.email,
-        subject: 'Welcome to TMS - Your Bus Adventure Starts Now!',
-        // subject: 'Account credential of TMS',
+        subject: 'Welcome to BTMS - Your Bus Adventure Starts Now!',
+        // subject: 'Account credential of BTMS',
         html: messageBody,
     };
     transporter.sendMail(mailOption, (error, info) => __awaiter(void 0, void 0, void 0, function* () {

@@ -13,7 +13,7 @@ const SystemTime = () => {
       <div className="border-2 border-dashed border-red-400 rounded-[8px] p-5 flex flex-col md:flex-row gap-10 items-center justify-around">
         <div className="flex flex-col gap-2">
           <span className="text-lg">
-            If you want to upgrade day and time this whole TMS
+            If you want to upgrade day and time this whole BTMS
             application click this upgrade button!{" "}
           </span>
           <span className="text-lg">Note: it will be never undo!</span>
