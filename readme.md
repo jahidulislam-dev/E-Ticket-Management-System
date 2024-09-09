@@ -2,7 +2,7 @@ Basic system requirements and instructions on how to install them:
 
 ---
 
-# Bus Management System
+# Bus Ticket Management System
 
 This guide will walk you through the process of setting up the BTMS. By following these steps, you will clone the project, install dependencies, and configure mongodb atlas for database management. Let's get started!
 
@@ -85,9 +85,6 @@ Before setting up the project, ensure that your system meets the following requi
 
 4. **setup other credentials at `.env` file:** there has `.env.example` and rename this to `.env`
 
-    ```bash
-    DATABASE_URL="mongodb+srv://<username>:<password>@cluster0.g5umn.mongodb.net/travel_mangement_jahid"
-    ```
 
 5. **add database connection string at `.env` file:** a `.env` file in the project root directory and set the `DATABASE_URL` environment variable. Replace the placeholders with your database connection details:
 
