@@ -114,6 +114,7 @@ const Trip = () => {
       trip_id: tripId,
       booking_seat: selectedSeats,
     };
+    console.log("body", body);
     insertBooking(body);
   };
 
@@ -132,7 +133,8 @@ const Trip = () => {
         message: `${bookingReqResponse?.message}`,
         description: (
           <div>
-            bus owner will connect with you as soon as possible and check your email
+            bus owner will connect with you as soon as possible and check your
+            email
           </div>
         ),
         placement: "bottomLeft",

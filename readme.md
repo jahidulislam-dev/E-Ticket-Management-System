@@ -2,9 +2,9 @@ Basic system requirements and instructions on how to install them:
 
 ---
 
-# Bus Ticket Management System
+# E-Ticket Management System
 
-This guide will walk you through the process of setting up the BTMS. By following these steps, you will clone the project, install dependencies, and configure mongodb atlas for database management. Let's get started!
+This guide will walk you through the process of setting up the ETMS. By following these steps, you will clone the project, install dependencies, and configure mongodb atlas for database management. Let's get started!
 
 ## System Requirements
 
@@ -68,7 +68,7 @@ Before setting up the project, ensure that your system meets the following requi
 1. **Clone the project:** Open your terminal or command prompt and run the following command to clone the project repository:
 
     ```bash
-    git clone https://github.com/jahidulislam-dev/Bus-Ticket-Management-System Bus-Ticket-Management-System
+    git clone https://github.com/jahidulislam-dev/E-Ticket-Management-System E-Ticket-Management-System
     ```
 
 2. **Navigate into the project directory:** Use the `cd` command to navigate into the backend directory:
