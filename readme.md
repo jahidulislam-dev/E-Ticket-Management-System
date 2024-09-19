@@ -116,5 +116,8 @@ Before setting up the project, ensure that your system meets the following requi
     This command will start the frontend application and make it accessible locally.
 
 ---
-
 That's it! You have successfully set up the Bus-Ticket-Management-System project. You can now start exploring and working with the codebase. Refer to the project documentation or README for further instructions on how to run and use the core service.
+---
+https://github.com/user-attachments/assets/56c74548-9ce8-4977-b2c4-5ef3d1665f6e
+---
+
