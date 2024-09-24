@@ -1,9 +1,9 @@
 import React from "react";
-import { useGetAllDriverQuery } from "@/redux/driver/driverApi";
 import TravelerList from "./TravelerList";
+import { useGetAllTravelersQuery } from "@/redux/traveler/traveler";
 
 const TravelerListContainer = () => {
-  const { data, isLoading } = useGetAllDriverQuery();
+  const { data, isLoading } = useGetAllTravelersQuery();
   return <TravelerList data={data?.data} loading={isLoading} />;
 };
 
