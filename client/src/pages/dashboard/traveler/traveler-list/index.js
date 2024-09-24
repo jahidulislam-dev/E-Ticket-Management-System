@@ -1,20 +1,11 @@
 import { userRole } from "@/config/userRole";
 import AdminDashboardLayout from "@/layouts/AdminDashboardLayout";
-import TravelerListContainer from "@/containers/AdminDashboard/Traveler/TravelerList";
-
 import React from "react";
-import { useGetAllTravelersQuery } from "@/redux/traveler/traveler";
+import TravelerListContainer from "@/containers/AdminDashboard/Traveler";
 
 const TravelerList = () => {
-  const { data, isLoading } = useGetAllTravelersQuery();
 
-  return (
-    <>
-      {"admin" === userRole.ADMIN && (
-        <TravelerListContainer data={data} isLoading={isLoading} />
-      )}
-    </>
-  );
+  return <>{"admin" === userRole.ADMIN && <TravelerListContainer />}</>;
 };
 
 export default TravelerList;

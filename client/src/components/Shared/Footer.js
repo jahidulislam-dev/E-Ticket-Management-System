@@ -27,7 +27,7 @@ const Footer = () => {
           <div className="flex flex-wrap text-left gap-y-5 lg:text-left">
             <div className="w-full md:w-6/12 lg:w-3/12">
               <h4 className="text-3xl font-semibold text-gray-900">
-                BTMS
+                ETMS
               </h4>
               <h5 className="text-lg my-2 text-gray-800">
                 Book with Ease, Travel with Speed
@@ -121,7 +121,7 @@ const Footer = () => {
           <div className="flex flex-col-reverse md:flex-row items-center justify-between">
             <div className="w-full text-center md:text-left md:w-6/12">
               <div className="text-sm text-gray-700 font-semibold py-1">
-                All Rights Reserved &copy; BTMS Online Service{" "}
+                All Rights Reserved &copy; ETMS Online Service{" "}
                 <span id="get-current-year">{year}</span>
               </div>
             </div>

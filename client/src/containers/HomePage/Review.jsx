@@ -15,7 +15,7 @@ const reviewData = [
   },
   {
     review:
-      "BTMS excelled in communication. Clear instructions were provided before and during the journey. Announcements were made promptly, keeping passengers informed about upcoming stops and any relevant information!",
+      "ETMS excelled in communication. Clear instructions were provided before and during the journey. Announcements were made promptly, keeping passengers informed about upcoming stops and any relevant information!",
     name: "Luci Jeny",
     designation: "Businessman",
     ratings: 3.5,
@@ -36,7 +36,7 @@ const reviewData = [
   },
   {
     review:
-      "BTMS impressed me with their commitment to punctuality. The bus arrived on time, and the entire journey adhered to the schedule. This reliability made planning my trip much smoother!",
+      "ETMS impressed me with their commitment to punctuality. The bus arrived on time, and the entire journey adhered to the schedule. This reliability made planning my trip much smoother!",
     name: "Samu Fika",
     designation: "Traveler",
     ratings: 4,

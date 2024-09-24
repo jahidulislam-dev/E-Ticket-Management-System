@@ -3,10 +3,10 @@ import { useState } from "react";
 import { EditOutlined } from "@ant-design/icons";
 
 const TravelerList = ({ data, isLoading }) => {
-  console.log("traveler data", data?.data);
+  console.log("traveler data", data);
   const [isEditing, setIsEditing] = useState(false);
   const [editingTraveler, setEditingTraveler] = useState(null);
-  const [dataSource, setDataSource] = useState(data?.data);
+  const [dataSource, setDataSource] = useState(data);
   const columns = [
     {
       title: "Sr.",
@@ -57,11 +57,15 @@ const TravelerList = ({ data, isLoading }) => {
   return (
     <div className="App">
       <header className="App-header">
-        <Table
-          columns={columns}
-          dataSource={dataSource}
-          scroll={{ x: true }}
-        ></Table>
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <Table
+            columns={columns}
+            dataSource={data}
+            scroll={{ x: true }}
+          ></Table>
+        )}
         <Modal
           title="Update a trip"
           open={isEditing}

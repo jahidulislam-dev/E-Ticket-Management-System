@@ -34,7 +34,7 @@ const AdminDashboardLayout = ({ children }) => {
         {collapsed || (
           <div className="flex justify-center items-center h-10 rounded-xl mx-2 my-3 duration-700">
             <Link href={"/"} className="text-white text-2xl">
-              BTMS
+              ETMS
             </Link>
           </div>
         )}

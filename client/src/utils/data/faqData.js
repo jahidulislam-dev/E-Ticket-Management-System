@@ -9,7 +9,7 @@ export const GeneralFQA = (panelStyle) => [
     children: (
       <>
         <p className="text-base">
-          BTMS is largest bus tickets and traveling company and
+          ETMS is largest bus tickets and traveling company and
           therefore, you will find the largest option of bus seats on the site.
           Some of the advantages of dealing with us are:
         </p>
@@ -39,7 +39,7 @@ export const GeneralFQA = (panelStyle) => [
     key: "2",
     label: (
       <h2 className="text-lg font-medium">
-        Do I need to register to use BTMS?
+        Do I need to register to use ETMS?
       </h2>
     ),
     children: <p className="text-base">Do I need to register to use redBus?</p>,

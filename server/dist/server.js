@@ -27,7 +27,7 @@ function bootstrap() {
             yield mongoose_1.default.connect(index_1.default.db_url);
             // console.log('Database connection on 🔥')
             server = app_1.default.listen(index_1.default.port, () => {
-                // console.log(`Server is running on port ${configs.port}`)
+                console.log(`Server is running on port ${index_1.default.port}`);
             });
         }
         catch (error) {

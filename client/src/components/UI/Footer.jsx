@@ -10,7 +10,7 @@ const Footer = () => {
         padding: "10px 50px",
       }}
     >
-      BTMS©{year}
+      ETMS©{year}
     </Footer>
   );
 };
